@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vegen Fendianto — Portfolio</title>
+  <meta name="description" content="Portfolio of Vegen Fendianto — Information Systems student at BINUS University, UI/UX Designer & Photographer." />
+  <meta property="og:title" content="Vegen Fendianto — Portfolio" />
+  <meta property="og:description" content="UI/UX Designer, Web Developer & Photographer. Open for internship." />
+  <meta property="og:image" content="assets/profile.webp" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%231a3fc4'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23ffc928' font-family='Arial' font-weight='900'>V</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+
+  <!-- NAVBAR -->
+  <header class="nav-wrap">
+    <nav class="nav" id="nav">
+      <a href="#profile" class="brand">V<span>.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#profile" data-spy="profile">Profile</a></li>
+        <li><a href="#projects" data-spy="projects">Projects</a></li>
+        <li><a href="#experience" data-spy="experience">Experience</a></li>
+        <li><a href="#certificate" data-spy="certificate">Certificate</a></li>
+        <li><a href="#contact" data-spy="contact">Contact</a></li>
+      </ul>
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">🌙</button>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ PROFILE ============ -->
+    <section id="profile" class="hero">
+      <div class="blob b1"></div><div class="blob b2"></div>
+      <span class="star s1">✱</span><span class="star s2">✱</span><span class="star s3">✱</span>
+      <div class="container hero-grid">
+        <div class="hero-text reveal">
+          <span class="hello">👋 Hello Everyone</span>
+          <h1>Vegen <em>Fendianto</em></h1>
+          <p class="typing">I'm a <strong id="typed"></strong><span class="caret"></span></p>
+          <p class="lead">Undergraduate Information Systems student at BINUS University with a strong interest in System Workflow Development, Automation, UX design and Web/App Development. Experienced in working collaboratively with others, managing time effectively, adapting to different situations, and performing under pressure. Possesses a creative and innovative mindset, with additional interests in photography and videography.</p>
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary">Take a look <span>→</span></a>
+            <a href="#contact" class="btn btn-ghost">Let's talk</a>
+          </div>
+          <div class="stats">
+            <div><b data-count="3.87" data-dec="2">0</b><small>GPA / 4.00</small></div>
+            <div><b data-count="200" data-suffix="+">0</b><small>Freshmen guided</small></div>
+            <div><b data-count="175" data-suffix="+">0</b><small>Community network</small></div>
+            <div><b data-count="7" data-suffix="+">0</b><small>Projects built</small></div>
+          </div>
+        </div>
+        <div class="hero-photo reveal" id="tiltPhoto">
+          <div class="photo-bg"></div>
+          <img src="assets/profile.webp" alt="Vegen Fendianto" />
+          <span class="badge bd1">UI/UX Designer</span>
+          <span class="badge bd2">Photographer</span>
+          <span class="badge bd3">Open for Internship</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT: education / skills / CV -->
+    <section class="about">
+      <div class="container about-grid">
+        <article class="card edu reveal">
+          <h3 class="card-title">Education</h3>
+          <div class="edu-body">
+            <div class="edu-icon">🎓</div>
+            <div>
+              <h4>Information Systems</h4>
+              <p>Streaming in Digital Technology Automation</p>
+              <p class="muted">BINUS University — School of Information Systems</p>
+            </div>
+          </div>
+          <div class="gpa">
+            <div class="ring" style="--p:96.75"><span><b>3.87</b>/4.00</span></div>
+            <p>Grade Point Average (GPA)</p>
+          </div>
+        </article>
+
+        <article class="card skills reveal">
+          <h3 class="card-title">Skills</h3>
+          <div class="tabs" id="skillTabs">
+            <button class="tab active" data-skill="tech">Technical</button>
+            <button class="tab" data-skill="soft">Soft Skills</button>
+            <button class="tab" data-skill="tools">Software / Tools</button>
+          </div>
+          <div class="chips" id="skillChips"></div>
+        </article>
+
+        <article class="card cv reveal">
+          <h3 class="card-title">CV</h3>
+          <button class="cv-thumb" id="cvOpen" aria-label="Open CV preview">
+            <img src="assets/cv.webp" alt="CV preview" loading="lazy" />
+            <span>🔍 Click to enlarge</span>
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section id="projects" class="section">
+      <div class="container">
+        <header class="sec-head reveal">
+          <span class="pill">✱ Projects ✱</span>
+          <h2>Things I've <em>designed</em> &amp; <em>built</em></h2>
+          <p>Click any card to see the full story behind the project.</p>
+        </header>
+        <div class="tabs center reveal" id="projTabs">
+          <button class="tab active" data-f="all">All</button>
+          <button class="tab" data-f="uiux">UI / UX Design</button>
+          <button class="tab" data-f="code">Programming</button>
+          <button class="tab" data-f="data">Data</button>
+        </div>
+        <div class="grid" id="projGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section id="experience" class="section alt">
+      <div class="container">
+        <header class="sec-head reveal">
+          <span class="pill">✱ Experience ✱</span>
+          <h2>Where I've <em>led</em> &amp; <em>learned</em></h2>
+          <p>Professional and organizational journeys that shaped how I work with people.</p>
+        </header>
+        <div class="tabs center reveal" id="expTabs">
+          <button class="tab active" data-f="all">All</button>
+          <button class="tab" data-f="pro">Professional</button>
+          <button class="tab" data-f="org">Organizational</button>
+        </div>
+        <div class="grid exp-grid" id="expGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ CERTIFICATE ============ -->
+    <section id="certificate" class="section">
+      <div class="container">
+        <header class="sec-head reveal">
+          <span class="pill">✱ Certificate ✱</span>
+          <h2>Proof of <em>progress</em></h2>
+          <p>Tap a certificate to view it in full size.</p>
+        </header>
+        <div class="cert-grid" id="certGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="contact">
+      <div class="blob b3"></div>
+      <div class="container contact-grid">
+        <div class="contact-img reveal"><img src="assets/profile.webp" alt="Vegen" loading="lazy" /></div>
+        <div class="contact-body reveal">
+          <h2>Thank <em>You</em></h2>
+          <p class="sub">Undergraduate Information Systems @ BINUS University</p>
+          <p class="open-note">Open For Internship <b>|</b> Ready to innovate and create an impact to society and make a difference.</p>
+
+          <div class="contact-cards">
+            <a class="c-card" href="https://www.linkedin.com/search/results/all/?keywords=Vegen%20Fendianto" target="_blank" rel="noopener">
+              <i>in</i><div><b>LinkedIn</b><small>Vegen Fendianto</small></div>
+            </a>
+            <button class="c-card" id="copyMail" data-mail="vfendianto@gmail.com">
+              <i>@</i><div><b>Gmail</b><small id="mailTxt">vfendianto@gmail.com</small></div>
+            </button>
+            <a class="c-card" href="https://wa.me/6287808086633" target="_blank" rel="noopener">
+              <i>☏</i><div><b>WhatsApp</b><small>0878 0808 6633</small></div>
+            </a>
+            <a class="c-card" href="https://instagram.com/vegenfe" target="_blank" rel="noopener">
+              <i>◎</i><div><b>Instagram</b><small>@vegenfe</small></div>
+            </a>
+          </div>
+
+          <form class="mail-form" id="mailForm">
+            <h4>Send a quick message</h4>
+            <div class="row">
+              <input type="text" id="fName" placeholder="Your name" required />
+              <input type="email" id="fEmail" placeholder="Your email" required />
+            </div>
+            <textarea id="fMsg" rows="3" placeholder="Your message…" required></textarea>
+            <button class="btn btn-primary" type="submit">Send via Email ✉</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">© <span id="yr"></span> Vegen Fendianto — Built with ♥ and lots of coffee.</footer>
+  <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+  <div class="toast" id="toast"></div>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true">
+      <button class="modal-x" id="modalX" aria-label="Close">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lb-x" id="lbX" aria-label="Close">✕</button>
+    <button class="lb-nav prev" id="lbPrev" aria-label="Previous">‹</button>
+    <figure><img id="lbImg" alt="" /><figcaption id="lbCap"></figcaption></figure>
+    <button class="lb-nav next" id="lbNext" aria-label="Next">›</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
