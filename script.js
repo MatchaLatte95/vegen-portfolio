@@ -4,7 +4,12 @@
 const SKILLS = {
   tech: ["UI / UX Research","Web Development","UiPath Process Automation","Mendix Rapid","Business & System Analysis","Data Modeling","Video & Photo Editing","Graphic Design"],
   soft: ["Adaptability","Time Management","Project Management","Team Leadership","Problem Solving","Detail Oriented","Teamwork"],
-  tools:["Figma","Mendix","UiPath","VS Code","Canva","Adobe Illustrator","Lightroom","CapCut","Word","Excel","PowerPoint","ChatGPT"]
+  tools:[
+    {n:"Figma",f:"figma"},{n:"Mendix",f:"mendix",w:1},{n:"UiPath",f:"uipath",w:1},{n:"draw.io",f:"drawio"},
+    {n:"VS Code",f:"vscode"},{n:"Canva",f:"canva"},{n:"Affinity",f:"app-green"},{n:"Lightroom",f:"lightroom"},
+    {n:"DaVinci Resolve",f:"davinci"},{n:"CapCut",f:"capcut"},{n:"Word",f:"word"},{n:"Excel",f:"excel"},
+    {n:"PowerPoint",f:"powerpoint"},{n:"Google Workspace",f:"google"},{n:"ChatGPT",f:"chatgpt"},{n:"Claude",f:"claude"}
+  ]
 };
 
 const PROJECTS = [
@@ -35,7 +40,7 @@ const PROJECTS = [
       "Focused on improving healthcare efficiency, data transparency, and fraud prevention through a user-friendly digital experience."],
     stack:["Figma","Web Dashboard","Biometrics"] },
   { id:"teduuh", cat:"uiux", tag:"UI / UX Design", title:"Teduuh", tagline:"Stay dry with Teduuh",
-    bg:"linear-gradient(135deg,#6ec6ff,#1a3fc4)", icon:"☂️",
+    bg:"linear-gradient(135deg,#8fb4ff,#2f55d4)", imgs:["teduuh-1","teduuh-2","teduuh-3"],
     short:"A smart umbrella rental application that protects users from unexpected rain.",
     points:[
       "Designed a user-friendly UI/UX for a smart umbrella rental application that protects users from unexpected rain.",
@@ -166,19 +171,6 @@ addEventListener("scroll",()=>{
 },{passive:true});
 $("#toTop").onclick=()=>scrollTo({top:0,behavior:"smooth"});
 
-/* TYPING */
-(()=>{
-  const words=["UI/UX Designer","Web Developer","Photographer","Automation Enthusiast","Student Leader"];
-  let w=0,c=0,del=false; const el=$("#typed");
-  (function tick(){
-    const word=words[w];
-    el.textContent=word.slice(0,c);
-    if(!del&&c===word.length){del=true;return setTimeout(tick,1400)}
-    if(del&&c===0){del=false;w=(w+1)%words.length}
-    c+=del?-1:1; setTimeout(tick,del?45:90);
-  })();
-})();
-
 /* REVEAL + COUNTERS */
 const io=new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}
@@ -208,7 +200,14 @@ if(matchMedia("(hover:hover)").matches){
 
 /* SKILLS */
 function renderSkills(k){
-  $("#skillChips").innerHTML=SKILLS[k].map((s,i)=>`<span class="chip" style="animation-delay:${i*45}ms">${s}</span>`).join("");
+  const box=$("#skillChips");
+  if(k==="tools"){
+    box.className="logo-grid";
+    box.innerHTML=SKILLS.tools.map((t,i)=>`<div class="logo-tile${t.w?" wide":""}" style="animation-delay:${i*40}ms" title="${t.n}"><img src="assets/tool-${t.f}.webp" alt="${t.n}" loading="lazy"><span>${t.n}</span></div>`).join("");
+  }else{
+    box.className="chips";
+    box.innerHTML=SKILLS[k].map((s,i)=>`<span class="chip" style="animation-delay:${i*45}ms">${s}</span>`).join("");
+  }
 }
 $$("#skillTabs .tab").forEach(b=>b.onclick=()=>{
   $$("#skillTabs .tab").forEach(x=>x.classList.toggle("active",x===b)); renderSkills(b.dataset.skill);

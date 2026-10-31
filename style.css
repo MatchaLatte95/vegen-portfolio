@@ -23,7 +23,7 @@ em{font-style:normal;color:var(--blue)}
 
 /* NAV */
 .nav-wrap{position:fixed;top:14px;left:0;right:0;z-index:100;display:flex;justify-content:center;padding:0 12px}
-.nav{display:flex;align-items:center;gap:10px;background:var(--blue);padding:8px 10px 8px 22px;border-radius:999px;box-shadow:var(--shadow-l);width:min(860px,100%);transition:.3s}
+.nav{display:flex;align-items:center;gap:10px;background:var(--blue);padding:8px 10px 8px 14px;border-radius:999px;box-shadow:var(--shadow-l);width:min(860px,100%);transition:.3s}
 .nav.scrolled{background:rgba(11,42,148,.92);backdrop-filter:blur(10px)}
 .brand{font-family:Anton,sans-serif;font-size:1.6rem;color:#fff;letter-spacing:1px}
 .brand span{color:var(--yellow)}
@@ -73,7 +73,7 @@ h1 em{color:var(--yellow)!important;text-shadow:3px 3px 0 var(--blue)}
 @keyframes blink{50%{opacity:0}}
 .lead{max-width:600px;color:var(--muted);font-size:.98rem}
 .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin:26px 0}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:600px;margin-top:10px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,170px));gap:14px;margin-top:10px}
 .stats div{background:var(--card);border-radius:16px;padding:14px 10px;text-align:center;box-shadow:var(--shadow);border-bottom:4px solid var(--yellow)}
 .stats b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:1.7rem;color:var(--blue)}
 [data-theme="dark"] .stats b{color:var(--yellow)}
@@ -238,7 +238,7 @@ h1 em{color:var(--yellow)!important;text-shadow:3px 3px 0 var(--blue)}
 /* RESPONSIVE */
 @media(max-width:980px){
   .hero-grid{grid-template-columns:1fr;text-align:center}
-  .lead{margin-inline:auto}.hero-cta,.stats{justify-content:center;margin-inline:auto}
+  .lead{margin-inline:auto}.hero-cta,.stats{justify-content:center;margin-inline:auto}.stats{justify-content:center}
   .hero-photo{min-height:420px;order:-1}
   .hero{padding-top:130px}
   .about-grid{grid-template-columns:1fr}
@@ -252,9 +252,18 @@ h1 em{color:var(--yellow)!important;text-shadow:3px 3px 0 var(--blue)}
   .nav-links a{display:flex;width:100%;padding:12px 18px}
   .nav{justify-content:space-between;position:relative}
   .nav-links{justify-content:flex-start}
-  .stats{grid-template-columns:repeat(2,1fr)}
   .contact-cards,.row{grid-template-columns:1fr}
   .grid,.exp-grid{grid-template-columns:1fr}
   .m-body{padding:22px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* LOGO GRID (Software / Tools) */
+.logo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(68px,1fr));gap:10px;align-content:flex-start;min-height:150px}
+.logo-tile{position:relative;aspect-ratio:1;background:#fff;border:1px solid var(--line);border-radius:18px;display:grid;place-items:center;padding:12px;box-shadow:0 4px 12px rgba(26,63,196,.08);animation:pop .45s both;transition:.3s;overflow:hidden;cursor:default}
+.logo-tile.wide{grid-column:span 2;aspect-ratio:auto;min-height:68px}
+.logo-tile img{max-width:100%;max-height:38px;object-fit:contain;transition:.3s}
+.logo-tile span{position:absolute;inset:auto 0 0;background:var(--blue);color:#fff;font-size:.62rem;font-weight:600;text-align:center;padding:3px 4px;transform:translateY(100%);transition:.3s;line-height:1.2}
+.logo-tile:hover{transform:translateY(-5px) scale(1.05);box-shadow:var(--shadow-l);border-color:var(--yellow)}
+.logo-tile:hover img{transform:scale(1.12) translateY(-6px)}
+.logo-tile:hover span{transform:none}
