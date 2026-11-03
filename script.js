@@ -41,10 +41,10 @@ const SKILLS = {
   ],
 };
 
-/* Photography galleries: n = number of photos in assets/photo-<name>-<n>.webp */
+/* Photography galleries: n = number of photos in assets/photos/<name>/<n>.webp */
 const makeGallery = (name, n, title) =>
   Array.from({ length: n }, (_, i) => ({
-    src: `assets/photo-${name}-${i + 1}.webp`,
+    src: `assets/photos/${name}/${i + 1}.webp`,
     title: `${title} — ${i + 1}/${n}`,
   }));
 const GALLERY_BOROBUDUR = makeGallery(
@@ -65,32 +65,13 @@ const GALLERY_VOLUNTEER = makeGallery("volunteer", 10, "Volunteer");
 
 const PROJECTS = [
   {
-    id: "nudge",
-    cat: "uiux",
-    tag: "UI / UX Design",
-    title: "Nudge",
-    tagline: "Focus & Productivity App",
-    bg: "linear-gradient(135deg,#e9e6ff,#dfe9ff)",
-    imgs: ["nudge-thumb"],
-    cover: true,
-    short:
-      "A focus and productivity app that lets users learn from their own materials with guided focus sessions.",
-    points: [
-      "Initiated the core product idea of allowing users to upload their own learning materials, creating a more personalized and flexible learning experience.",
-      "Led the overall UI/UX design process, taking responsibility for designing the entire application system, from concept development and user flows to high-fidelity interfaces.",
-      "Designed all major application screens, including onboarding, learning modules, focus sessions, break sessions, and user dashboards.",
-      "Developed a consistent design system, ensuring visual harmony, intuitive navigation, and a seamless user experience across the application.",
-    ],
-    stack: ["Figma", "Design System", "Mobile UI", "Mascot"],
-  },
-  {
     id: "voyago",
     cat: "uiux",
     tag: "UI / UX Design",
     title: "Voyago",
     tagline: "Traveling Made Simple",
     bg: "linear-gradient(135deg,#6fe3c9,#ffe27a)",
-    imgs: ["voyago-thumb"],
+    imgs: ["projects/voyago/cover"],
     cover: true,
     short:
       "A travel app designed to make every journey easier, faster, and more convenient.",
@@ -109,7 +90,7 @@ const PROJECTS = [
     title: "Rudy",
     tagline: "Your Personal Fitness Companion",
     bg: "linear-gradient(135deg,#ffd6d6,#fff1f1)",
-    imgs: ["rudy-thumb"],
+    imgs: ["projects/rudy/cover"],
     cover: true,
     short:
       "An AI-powered fitness app that helps users understand their fitness condition and build healthier habits.",
@@ -122,13 +103,31 @@ const PROJECTS = [
     stack: ["Figma", "Dashboard UI", "Mascot", "AI-powered"],
   },
   {
+    id: "identicare",
+    cat: "uiux",
+    tag: "UI / UX Design",
+    title: "IDENTICARE",
+    tagline: "Healthcare verification platform",
+    bg: "linear-gradient(135deg,#d7f5e6,#e8f0ff)",
+    imgs: ["projects/identicare/1", "projects/identicare/2"],
+    wide: true,
+    short:
+      "A healthcare verification platform that improves usability for professionals and institutions.",
+    points: [
+      "Designed the UI/UX of a healthcare verification platform to improve usability for healthcare professionals and institutions.",
+      "Developed intuitive interfaces for AI-generated symptom analysis, biometric validation, demographic data, and stress-level indicators.",
+      "Focused on improving healthcare efficiency, data transparency, and fraud prevention through a user-friendly digital experience.",
+    ],
+    stack: ["Figma", "Web Dashboard", "Biometrics"],
+  },
+  {
     id: "cinevo",
     cat: "uiux",
     tag: "UI / UX Design",
     title: "Cinevo",
     tagline: "Your Movies Your Way",
     bg: "linear-gradient(135deg,#1b1f3b,#3a2a5c)",
-    imgs: ["cinevo-thumb"],
+    imgs: ["projects/cinevo/cover"],
     cover: true,
     short:
       "A movie ticket booking application designed in Figma, from discovery to payment.",
@@ -141,22 +140,23 @@ const PROJECTS = [
     stack: ["Figma", "User Flow", "Data Flow", "Mobile UI"],
   },
   {
-    id: "identicare",
+    id: "nudge",
     cat: "uiux",
     tag: "UI / UX Design",
-    title: "IDENTICARE",
-    tagline: "Healthcare verification platform",
-    bg: "linear-gradient(135deg,#d7f5e6,#e8f0ff)",
-    imgs: ["identicare-1", "identicare-2"],
-    wide: true,
+    title: "Nudge",
+    tagline: "Focus & Productivity App",
+    bg: "linear-gradient(135deg,#e9e6ff,#dfe9ff)",
+    imgs: ["projects/nudge/cover"],
+    cover: true,
     short:
-      "A healthcare verification platform that improves usability for professionals and institutions.",
+      "A focus and productivity app that lets users learn from their own materials with guided focus sessions.",
     points: [
-      "Designed the UI/UX of a healthcare verification platform to improve usability for healthcare professionals and institutions.",
-      "Developed intuitive interfaces for AI-generated symptom analysis, biometric validation, demographic data, and stress-level indicators.",
-      "Focused on improving healthcare efficiency, data transparency, and fraud prevention through a user-friendly digital experience.",
+      "Initiated the core product idea of allowing users to upload their own learning materials, creating a more personalized and flexible learning experience.",
+      "Led the overall UI/UX design process, taking responsibility for designing the entire application system, from concept development and user flows to high-fidelity interfaces.",
+      "Designed all major application screens, including onboarding, learning modules, focus sessions, break sessions, and user dashboards.",
+      "Developed a consistent design system, ensuring visual harmony, intuitive navigation, and a seamless user experience across the application.",
     ],
-    stack: ["Figma", "Web Dashboard", "Biometrics"],
+    stack: ["Figma", "Design System", "Mobile UI", "Mascot"],
   },
   {
     id: "kenang",
@@ -165,7 +165,7 @@ const PROJECTS = [
     title: "Kenang",
     tagline: "Online Photobooth & Printing App",
     bg: "linear-gradient(135deg,#cfe0ff,#e8f0ff)",
-    imgs: ["kenang-thumb"],
+    imgs: ["projects/kenang/cover"],
     cover: true,
     short:
       "An online photobooth platform to upload photos, customize them with frames, and print at nearby machines.",
@@ -184,7 +184,7 @@ const PROJECTS = [
     title: "ANGIN BNB",
     tagline: "Hotel & room booking website",
     bg: "linear-gradient(135deg,#ffe0e3,#fff4f4)",
-    imgs: ["angin-1", "angin-2", "angin-3"],
+    imgs: ["projects/angin/1", "projects/angin/2", "projects/angin/3"],
     wide: true,
     short:
       "An Airbnb-inspired hotel and room booking website built as a laboratory mini programming project.",
@@ -203,7 +203,7 @@ const PROJECTS = [
     title: "Data Modeling & Dashboard",
     tagline: "Interactive Excel dashboard",
     bg: "linear-gradient(135deg,#dff7d8,#d8f0ff)",
-    imgs: ["dash-1", "dash-2"],
+    imgs: ["projects/dash/1", "projects/dash/2"],
     wide: true,
     short:
       "An interactive Excel dashboard that turns lab and lecture data into clear, decision-ready insights.",
@@ -223,7 +223,7 @@ const PROJECTS = [
     title: "Lampion Waisak Borobudur 2026",
     tagline: "Waisak Celebration at Borobudur Temple",
     bg: "linear-gradient(135deg,#1b1f3b,#ff9f1c)",
-    imgs: ["photo-borobudur-1"],
+    imgs: ["photos/borobudur/1"],
     cover: true,
     gallery: GALLERY_BOROBUDUR,
     short:
@@ -241,7 +241,7 @@ const PROJECTS = [
     title: "Perayaan Kathina 2025/2569 B.E",
     tagline: "KMBD Binus University",
     bg: "linear-gradient(135deg,#f6c453,#b45f06)",
-    imgs: ["photo-kathina-3"],
+    imgs: ["photos/kathina/3"],
     cover: true,
     gallery: GALLERY_KATHINA,
     short:
@@ -259,7 +259,7 @@ const PROJECTS = [
     title: "Malam Keakraban KMBD 2025",
     tagline: "Event Photography · KMBD 2025",
     bg: "linear-gradient(135deg,#0f1b2d,#3a5a40)",
-    imgs: ["photo-malam-1"],
+    imgs: ["photos/malam/1"],
     cover: true,
     gallery: GALLERY_MALAM,
     short:
@@ -277,7 +277,7 @@ const PROJECTS = [
     title: "PMB WP KMBD",
     tagline: "Event Photography · KMBD",
     bg: "linear-gradient(135deg,#2b2d42,#8d99ae)",
-    imgs: ["photo-pmb-1"],
+    imgs: ["photos/pmb/1"],
     cover: true,
     gallery: GALLERY_PMB,
     short:
@@ -295,7 +295,7 @@ const PROJECTS = [
     title: "Photoshoot Studio",
     tagline: "Studio Portrait Photography",
     bg: "linear-gradient(135deg,#e9ecef,#adb5bd)",
-    imgs: ["photo-studio-1"],
+    imgs: ["photos/studio/1"],
     cover: true,
     gallery: GALLERY_STUDIO,
     short:
@@ -313,7 +313,7 @@ const PROJECTS = [
     title: "Binus Fun Run 2025",
     tagline: "Event Photography · BINUS University",
     bg: "linear-gradient(135deg,#1d4ed8,#38bdf8)",
-    imgs: ["photo-funrun-1"],
+    imgs: ["photos/funrun/1"],
     cover: true,
     gallery: GALLERY_FUNRUN,
     short:
@@ -331,7 +331,7 @@ const PROJECTS = [
     title: "Volunteer",
     tagline: "Volunteer Event Photography",
     bg: "linear-gradient(135deg,#7f1d1d,#f1c40f)",
-    imgs: ["photo-volunteer-2"],
+    imgs: ["photos/volunteer/2"],
     cover: true,
     gallery: GALLERY_VOLUNTEER,
     short:
@@ -349,7 +349,7 @@ const PROJECTS = [
     title: "Short Movie — Yearbook KMBD 2025",
     tagline: "Short Movie",
     bg: "linear-gradient(135deg,#7f1d1d,#ef4444)",
-    imgs: ["video-yearbook-thumb"],
+    imgs: ["videos/yearbook"],
     cover: true,
     link: "https://youtu.be/vnd83KlSH6g",
     linkLabel: "Watch on YouTube",
@@ -364,7 +364,7 @@ const PROJECTS = [
     title: "Welcoming KMBD 2026",
     tagline: "Instagram Reels",
     bg: "linear-gradient(135deg,#7c3aed,#f472b6,#fb923c)",
-    imgs: ["video-welcoming-thumb"],
+    imgs: ["videos/welcoming"],
     cover: true,
     link: "https://www.instagram.com/reel/DdqsmhzzQPN/",
     linkLabel: "Watch on Instagram",
@@ -381,7 +381,7 @@ const EXPERIENCES = [
     tag: "Professional",
     title: "Mentor — SASC Scholarship Awardee",
     org: "Odd Semester 2026",
-    imgs: ["mentor"],
+    imgs: ["experience/mentor/1"],
     metrics: ["Mentoring"],
     points: [
       "Provided academic guidance, study support, and practical assistance to Information Systems students throughout their university journey.",
@@ -395,8 +395,8 @@ const EXPERIENCES = [
     tag: "Organizational",
     title: "Freshmen Leader & Freshmen Partner",
     org: "FYP 2025",
-    imgs: ["fyp-1", "fyp-2", "fyp-3"],
-    metrics: [" 13 Freshemens", "Planted 18 trees"],
+    imgs: ["experience/fyp/1", "experience/fyp/2", "experience/fyp/3"],
+    metrics: ["13 leaders", "200+ freshmen", "18 trees"],
     points: [
       "Guided 13 freshmen leaders and supported 200+ incoming Information Systems freshmen in adapting to university life.",
       "Helped new students understand academic expectations, campus procedures, and build connections with their peers.",
@@ -410,7 +410,7 @@ const EXPERIENCES = [
     tag: "Organizational",
     title: "Regional President @Alam Sutera",
     org: "Klub Seni Fotografi Bina Nusantara",
-    imgs: ["regional-1", "regional-2"],
+    imgs: ["experience/regional/1", "experience/regional/2"],
     metrics: ["65 members", "75+ new members", "175+ network"],
     points: [
       "Led a 65-member regional team and coordinated 14 staff and volunteers to strengthen member engagement and organizational performance.",
@@ -424,7 +424,7 @@ const EXPERIENCES = [
     tag: "Organizational",
     title: "Coordinator of Design & Documentation",
     org: "Perayaan Kathina 2569 B.E / 2026 — KMBD",
-    imgs: ["kathina-1", "kathina-2", "kathina-3"],
+    imgs: ["experience/kathina/1", "experience/kathina/2", "experience/kathina/3"],
     metrics: ["Design Team", "Documentation"],
     points: [
       "Coordinated the design team and managed visual materials for Perayaan Kathina 2569 B.E. / 2026, organized by KMBD.",
@@ -439,7 +439,7 @@ const EXPERIENCES = [
     tag: "Organizational",
     title: "Coordinator of Photoshoot Division",
     org: "NARASI 2025 — Klub Seni Fotografi Bina Nusantara",
-    imgs: ["narasi-1", "narasi-2", "narasi-3"],
+    imgs: ["experience/narasi/1", "experience/narasi/2", "experience/narasi/3"],
     metrics: ["Photoshoot", "Creative Direction"],
     points: [
       "Led the planning and execution of photoshoot activities for NARASI 2025, coordinating photographers, models, dancers, and supporting team members.",
@@ -454,7 +454,7 @@ const EXPERIENCES = [
     tag: "Organizational",
     title: "Project Manager of Benchmarking 2025",
     org: "Klub Seni Fotografi Bina Nusantara",
-    imgs: ["bench-1", "bench-2", "bench-3", "bench-4"],
+    imgs: ["experience/bench/1", "experience/bench/2", "experience/bench/3", "experience/bench/4"],
     metrics: ["3 universities", "FGD", "Photo hunt"],
     points: [
       "Participated in an inter-university photography benchmarking event involving KLIFONARA, PHPC (Universitas Pelita Harapan), and OBSCURA (Universitas Multimedia Nusantara).",
@@ -469,7 +469,7 @@ const EXPERIENCES = [
     tag: "Organizational",
     title: "Activist, Creative Media & Art Division",
     org: "KMBD",
-    imgs: ["kmbd"],
+    imgs: ["experience/kmbd/1"],
     metrics: ["Visual Identity"],
     points: [
       "Contributed to KMBD's visual identity by creating photography and design materials for various Buddhist community activities and events, supporting promotional efforts and event documentation through creative visual content.",
@@ -481,7 +481,7 @@ const EXPERIENCES = [
     tag: "Organizational",
     title: "Activist, Event Division",
     org: "KLIFONARA",
-    imgs: ["klifonara"],
+    imgs: ["experience/klifonara/1"],
     metrics: ["Events", "Photo Trials"],
     points: [
       "Coordinated photography hunting events and bonding activities for KLIFONARA members, including Photo Trials, to encourage hands-on photography practice, strengthen teamwork, and foster stronger connections within the photography community.",
@@ -491,14 +491,14 @@ const EXPERIENCES = [
 
 const CERTS = [
   "RAP-ID Certification",
-  "Certificate of Completion",
-  "Certificate of Appreciation",
-  "Professional Office (Solution C.1)",
-  "Advanced English (C.1)",
-  "Market Research & Business Communication (C.1)",
   "Dean's List Certificate",
-  "Sertifikat",
-].map((t, i) => ({ title: t, src: `assets/cert-${i + 1}.webp` }));
+  "Certificate of Appreciation Borobudur",
+  "Certificate of Appreciation KMBD",
+  "Finalist of BNCC Hackhaton 8.0",
+  "Market Research & Business Communication (C.1)",
+  "Certificate of Completition",
+  "Advanced English C2.1",
+].map((t, i) => ({ title: t, src: `assets/certificates/${i + 1}.webp` }));
 
 /* =========================================================
    HELPERS
@@ -635,7 +635,7 @@ function renderSkills(k) {
     box.innerHTML = SKILLS.tools
       .map(
         (t, i) =>
-          `<div class="logo-tile${t.w ? " wide" : ""}" style="animation-delay:${i * 40}ms" title="${t.n}"><img src="assets/tool-${t.f}.webp" alt="${t.n}" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('no-logo')"><span>${t.n}</span></div>`,
+          `<div class="logo-tile${t.w ? " wide" : ""}" style="animation-delay:${i * 40}ms" title="${t.n}"><img src="assets/tools/${t.f}.webp" alt="${t.n}" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('no-logo')"><span>${t.n}</span></div>`,
       )
       .join("");
   } else {
@@ -850,7 +850,7 @@ $$(".cert").forEach((el) => {
 });
 $("#cvOpen").onclick = () =>
   openLightbox(
-    [{ src: "assets/cv.webp", title: "Curriculum Vitae — Vegen Fendianto" }],
+    [{ src: "assets/cv/cv.webp", title: "Curriculum Vitae — Vegen Fendianto" }],
     0,
   );
 
