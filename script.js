@@ -424,7 +424,11 @@ const EXPERIENCES = [
     tag: "Organizational",
     title: "Coordinator of Design & Documentation",
     org: "Perayaan Kathina 2569 B.E / 2026 — KMBD",
-    imgs: ["experience/kathina/1", "experience/kathina/2", "experience/kathina/3"],
+    imgs: [
+      "experience/kathina/1",
+      "experience/kathina/2",
+      "experience/kathina/3",
+    ],
     metrics: ["Design Team", "Documentation"],
     points: [
       "Coordinated the design team and managed visual materials for Perayaan Kathina 2569 B.E. / 2026, organized by KMBD.",
@@ -454,7 +458,12 @@ const EXPERIENCES = [
     tag: "Organizational",
     title: "Project Manager of Benchmarking 2025",
     org: "Klub Seni Fotografi Bina Nusantara",
-    imgs: ["experience/bench/1", "experience/bench/2", "experience/bench/3", "experience/bench/4"],
+    imgs: [
+      "experience/bench/1",
+      "experience/bench/2",
+      "experience/bench/3",
+      "experience/bench/4",
+    ],
     metrics: ["3 universities", "FGD", "Photo hunt"],
     points: [
       "Participated in an inter-university photography benchmarking event involving KLIFONARA, PHPC (Universitas Pelita Harapan), and OBSCURA (Universitas Multimedia Nusantara).",
@@ -491,13 +500,13 @@ const EXPERIENCES = [
 
 const CERTS = [
   "RAP-ID Certification",
-  "Dean's List Certificate",
-  "Certificate of Appreciation Borobudur",
-  "Certificate of Appreciation KMBD",
-  "Finalist of BNCC Hackhaton 8.0",
+  "Certificate of Completion",
+  "Certificate of Appreciation",
+  "Professional Office (Solution C.1)",
+  "Advanced English (C.1)",
   "Market Research & Business Communication (C.1)",
-  "Certificate of Completition",
-  "Advanced English C2.1",
+  "Dean's List Certificate",
+  "Sertifikat",
 ].map((t, i) => ({ title: t, src: `assets/certificates/${i + 1}.webp` }));
 
 /* =========================================================
@@ -855,22 +864,19 @@ $("#cvOpen").onclick = () =>
   );
 
 /* CONTACT */
-$("#copyMail").onclick = async () => {
-  const m = $("#copyMail").dataset.mail;
-  try {
-    await navigator.clipboard.writeText(m);
-    toast("Email copied! ✉️");
-  } catch (e) {
-    location.href = "mailto:" + m;
-  }
-};
+/* Send form -> WhatsApp (change the number here if needed) */
+const WA_NUMBER = "6287808086633";
 $("#mailForm").onsubmit = (e) => {
   e.preventDefault();
-  const n = $("#fName").value,
-    em = $("#fEmail").value,
-    msg = $("#fMsg").value;
-  const body = encodeURIComponent(`${msg}\n\n— ${n} (${em})`);
-  location.href = `mailto:vfendianto@gmail.com?subject=${encodeURIComponent("Hello from your portfolio — " + n)}&body=${body}`;
-  toast("Opening your email app…");
+  const n = $("#fName").value.trim(),
+    em = $("#fEmail").value.trim(),
+    msg = $("#fMsg").value.trim();
+  const text = `Hello Vegen, I'm ${n}.\n\n${msg}${em ? `\n\nMy email: ${em}` : ""}`;
+  window.open(
+    `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`,
+    "_blank",
+    "noopener",
+  );
+  toast("Opening WhatsApp…");
 };
 $("#yr").textContent = new Date().getFullYear();
