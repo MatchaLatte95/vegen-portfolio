@@ -864,6 +864,35 @@ $("#cvOpen").onclick = () =>
   );
 
 /* CONTACT */
+/* Gmail card -> opens a new email addressed to MAIL_TO, depending on the device:
+   desktop = Gmail on the web, Android = default mail app (usually Gmail),
+   iPhone/iPad = Gmail app (falls back to the default mail app) */
+const MAIL_TO = "vfendianto@gmail.com";
+const MAIL_SUBJECT = "Hello Vegen";
+$("#gmailLink").onclick = (e) => {
+  const ua = navigator.userAgent;
+  const isAndroid = /Android/i.test(ua);
+  const isIOS =
+    /iPhone|iPad|iPod/i.test(ua) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const subject = encodeURIComponent(MAIL_SUBJECT);
+  if (isAndroid) return; // let the mailto: link open the mail app's compose screen
+  e.preventDefault();
+  if (isIOS) {
+    location.href = `googlegmail:///co?to=${MAIL_TO}&subject=${subject}`;
+    setTimeout(() => {
+      if (!document.hidden)
+        location.href = `mailto:${MAIL_TO}?subject=${subject}`;
+    }, 1200);
+  } else {
+    window.open(
+      `https://mail.google.com/mail/?view=cm&fs=1&to=${MAIL_TO}&su=${subject}`,
+      "_blank",
+      "noopener",
+    );
+  }
+};
+
 /* Send form -> WhatsApp (change the number here if needed) */
 const WA_NUMBER = "6287808086633";
 $("#mailForm").onsubmit = (e) => {
