@@ -396,7 +396,7 @@ const EXPERIENCES = [
     title: "Freshmen Leader & Freshmen Partner",
     org: "FYP 2025",
     imgs: ["experience/fyp/1", "experience/fyp/2", "experience/fyp/3"],
-    metrics: ["13 leaders", "200+ freshmen", "18 trees"],
+    metrics: ["13 Freshmen", "18 Trees"],
     points: [
       "Guided 13 freshmen leaders and supported 200+ incoming Information Systems freshmen in adapting to university life.",
       "Helped new students understand academic expectations, campus procedures, and build connections with their peers.",
@@ -479,7 +479,7 @@ const EXPERIENCES = [
     title: "Activist, Creative Media & Art Division",
     org: "KMBD",
     imgs: ["experience/kmbd/1"],
-    metrics: ["Visual Identity"],
+    metrics: [],
     points: [
       "Contributed to KMBD's visual identity by creating photography and design materials for various Buddhist community activities and events, supporting promotional efforts and event documentation through creative visual content.",
     ],
@@ -522,29 +522,6 @@ const toast = (msg) => {
   t.classList.add("show");
   clearTimeout(toast.t);
   toast.t = setTimeout(() => t.classList.remove("show"), 2200);
-};
-
-/* THEME */
-const root = document.documentElement,
-  themeBtn = $("#themeBtn");
-const saved = (() => {
-  try {
-    return localStorage.getItem("theme");
-  } catch (e) {
-    return null;
-  }
-})();
-if (saved === "dark") {
-  root.dataset.theme = "dark";
-  themeBtn.textContent = "☀️";
-}
-themeBtn.onclick = () => {
-  const dark = root.dataset.theme === "dark";
-  root.dataset.theme = dark ? "light" : "dark";
-  themeBtn.textContent = dark ? "🌙" : "☀️";
-  try {
-    localStorage.setItem("theme", dark ? "light" : "dark");
-  } catch (e) {}
 };
 
 /* NAV */
