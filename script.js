@@ -514,10 +514,13 @@ const CERTS = [
    ========================================================= */
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
 const img = (n, cls = "", alt = "") =>
   `<img src="assets/${n}.webp" class="${cls}" alt="${alt}" loading="lazy">`;
+const PAGE = document.body.dataset.page || "home";
 const toast = (msg) => {
   const t = $("#toast");
+  if (!t) return;
   t.textContent = msg;
   t.classList.add("show");
   clearTimeout(toast.t);
@@ -527,150 +530,193 @@ const toast = (msg) => {
 /* NAV */
 const burger = $("#burger"),
   links = $("#navLinks");
-burger.onclick = () => {
+on(burger, "click", () => {
   burger.classList.toggle("open");
   links.classList.toggle("open");
-};
-$$("#navLinks a").forEach(
-  (a) =>
-    (a.onclick = () => {
-      burger.classList.remove("open");
-      links.classList.remove("open");
-    }),
+});
+$$("#navLinks a").forEach((a) =>
+  on(a, "click", () => {
+    burger.classList.remove("open");
+    links.classList.remove("open");
+  }),
 );
-const spy = new IntersectionObserver(
-  (es) =>
-    es.forEach((e) => {
-      if (e.isIntersecting) {
-        $$("#navLinks a").forEach((a) =>
-          a.classList.toggle("active", a.dataset.spy === e.target.id),
-        );
-      }
-    }),
-  { rootMargin: "-45% 0px -50% 0px" },
-);
-["profile", "projects", "experience", "certificate", "contact"].forEach((id) =>
-  spy.observe($("#" + id)),
-);
-
+function setActive(k) {
+  $$("#navLinks a").forEach((a) =>
+    a.classList.toggle("active", a.dataset.nav === k),
+  );
+}
+setActive(PAGE);
+if (PAGE === "home") {
+  // on the home page, "Contact" lights up when its section is in view
+  const spy = new IntersectionObserver(
+    (es) =>
+      es.forEach((e) => {
+        if (e.isIntersecting)
+          setActive(e.target.id === "contact" ? "contact" : "home");
+      }),
+    { rootMargin: "-45% 0px -50% 0px" },
+  );
+  $$("main > section").forEach((sec) => spy.observe(sec));
+}
 addEventListener(
   "scroll",
   () => {
-    const h = document.documentElement,
-      y = h.scrollTop;
-    $("#progress").style.width =
-      (y / (h.scrollHeight - h.clientHeight)) * 100 + "%";
+    const y = document.documentElement.scrollTop;
     $("#nav").classList.toggle("scrolled", y > 30);
     $("#toTop").classList.toggle("show", y > 600);
   },
   { passive: true },
 );
-$("#toTop").onclick = () => scrollTo({ top: 0, behavior: "smooth" });
+on($("#toTop"), "click", () => scrollTo({ top: 0, behavior: "smooth" }));
+if ($("#yr")) $("#yr").textContent = new Date().getFullYear();
 
-/* REVEAL + COUNTERS */
-const io = new IntersectionObserver(
-  (es) =>
-    es.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add("in");
-        io.unobserve(e.target);
-      }
-    }),
-  { threshold: 0.12 },
-);
-$$(".reveal").forEach((el) => io.observe(el));
-
-const counters = new IntersectionObserver(
-  (es) =>
-    es.forEach((e) => {
-      if (!e.isIntersecting) return;
-      counters.unobserve(e.target);
-      const el = e.target,
-        end = parseFloat(el.dataset.count),
-        dec = +el.dataset.dec || 0,
-        suf = el.dataset.suffix || "";
-      const t0 = performance.now();
-      (function step(t) {
-        const p = Math.min((t - t0) / 1400, 1),
-          v = end * (1 - Math.pow(1 - p, 3));
-        el.textContent = v.toFixed(dec) + suf;
-        if (p < 1) requestAnimationFrame(step);
-      })(t0);
-    }),
-  { threshold: 0.5 },
-);
-$$("[data-count]").forEach((el) => counters.observe(el));
-
-/* HERO PHOTO TILT */
-const tilt = $("#tiltPhoto");
-if (matchMedia("(hover:hover)").matches) {
-  tilt.addEventListener("mousemove", (e) => {
+/* =========================================================
+   HOME
+   ========================================================= */
+/* hero photo tilt */
+(() => {
+  const tilt = $("#tiltPhoto");
+  if (!tilt || !matchMedia("(hover:hover)").matches) return;
+  on(tilt, "mousemove", (e) => {
     const r = tilt.getBoundingClientRect(),
       x = (e.clientX - r.left) / r.width - 0.5,
       y = (e.clientY - r.top) / r.height - 0.5;
     tilt.style.transform = `perspective(900px) rotateY(${x * 10}deg) rotateX(${-y * 8}deg)`;
   });
-  tilt.addEventListener("mouseleave", () => (tilt.style.transform = ""));
-}
+  on(tilt, "mouseleave", () => (tilt.style.transform = ""));
+})();
 
-/* SKILLS */
+/* skills */
 function renderSkills(k) {
   const box = $("#skillChips");
+  if (!box) return;
   if (k === "tools") {
     box.className = "logo-grid";
     box.innerHTML = SKILLS.tools
       .map(
-        (t, i) =>
-          `<div class="logo-tile${t.w ? " wide" : ""}" style="animation-delay:${i * 40}ms" title="${t.n}"><img src="assets/tools/${t.f}.webp" alt="${t.n}" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('no-logo')"><span>${t.n}</span></div>`,
+        (t) =>
+          `<div class="logo-tile${t.w ? " wide" : ""}" title="${t.n}"><img src="assets/tools/${t.f}.webp" alt="${t.n}" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('no-logo')"><span>${t.n}</span></div>`,
       )
       .join("");
   } else {
     box.className = "chips";
-    box.innerHTML = SKILLS[k]
-      .map(
-        (s, i) =>
-          `<span class="chip" style="animation-delay:${i * 45}ms">${s}</span>`,
-      )
-      .join("");
+    box.innerHTML = SKILLS[k].map((s) => `<span class="chip">${s}</span>`).join("");
   }
 }
-$$("#skillTabs .tab").forEach(
-  (b) =>
-    (b.onclick = () => {
-      $$("#skillTabs .tab").forEach((x) =>
-        x.classList.toggle("active", x === b),
-      );
-      renderSkills(b.dataset.skill);
-    }),
+$$("#skillTabs .tab").forEach((b) =>
+  on(b, "click", () => {
+    $$("#skillTabs .tab").forEach((x) => x.classList.toggle("active", x === b));
+    renderSkills(b.dataset.skill);
+  }),
 );
 renderSkills("tech");
 
-/* PROJECTS */
+/* explore cards: live counts */
+if ($("#exProjects")) {
+  $("#exProjects").textContent = `${PROJECTS.length} Projects`;
+  $("#exExperience").textContent = `${EXPERIENCES.length} Experiences · ${CERTS.length} Certificates`;
+}
+
+/* =========================================================
+   MODAL + LIGHTBOX (shared)
+   ========================================================= */
+const modal = $("#modal");
+function openModal(html) {
+  if (!modal) return;
+  $("#modalBody").innerHTML = html;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  modal.querySelector(".modal-box").scrollTop = 0;
+}
+function closeModal() {
+  if (!modal) return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+on($("#modalX"), "click", closeModal);
+on(modal, "click", (e) => {
+  if (e.target === modal) closeModal();
+});
+
+const lb = $("#lightbox");
+let lbList = [],
+  lbI = 0;
+function showLb() {
+  const c = lbList[lbI];
+  $("#lbImg").src = c.src;
+  $("#lbCap").textContent = c.title;
+  const multi = lbList.length > 1;
+  $("#lbPrev").style.display = $("#lbNext").style.display = multi ? "" : "none";
+}
+function openLightbox(list, i) {
+  lbList = list;
+  lbI = i;
+  showLb();
+  lb.classList.add("open");
+  lb.setAttribute("aria-hidden", "false");
+}
+function closeLb() {
+  lb.classList.remove("open");
+  lb.setAttribute("aria-hidden", "true");
+}
+const step = (d) => {
+  lbI = (lbI + d + lbList.length) % lbList.length;
+  showLb();
+};
+on($("#lbX"), "click", closeLb);
+on($("#lbPrev"), "click", () => step(-1));
+on($("#lbNext"), "click", () => step(1));
+on(lb, "click", (e) => {
+  if (e.target === lb) closeLb();
+});
+addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeLb();
+    closeModal();
+  }
+  if (lb.classList.contains("open")) {
+    if (e.key === "ArrowLeft") step(-1);
+    if (e.key === "ArrowRight") step(1);
+  }
+});
+on($("#cvOpen"), "click", () =>
+  openLightbox(
+    [{ src: "assets/cv/cv.webp", title: "Curriculum Vitae — Vegen Fendianto" }],
+    0,
+  ),
+);
+
+/* =========================================================
+   PROJECTS PAGE
+   ========================================================= */
 function renderProjects(f = "all") {
+  const grid = $("#projGrid");
+  if (!grid) return;
   const list = PROJECTS.filter((p) => f === "all" || p.cat === f);
   if (!list.length) {
-    $("#projGrid").innerHTML = `<div class="empty-state">
+    grid.innerHTML = `<div class="empty-state">
       <div class="empty-icon">🎬</div>
       <h3>Coming soon</h3>
       <p>Videography projects will be added here.</p></div>`;
     return;
   }
-  $("#projGrid").innerHTML = list
-    .map((p, i) => {
+  grid.innerHTML = list
+    .map((p) => {
       const media = p.imgs
         ? p.imgs
             .slice(0, p.wide || p.cover ? 1 : 3)
             .map((n, j) =>
               img(
                 n,
-                (p.cover ? "cover " : p.wide ? "wide " : "") +
-                  (j === 1 ? "m2" : ""),
+                (p.cover ? "cover " : p.wide ? "wide " : "") + (j === 1 ? "m2" : ""),
                 p.title,
               ),
             )
             .join("")
         : `<span style="font-size:6rem;align-self:center;margin:auto">${p.icon}</span>`;
-      return `<article class="p-card" style="animation-delay:${i * 80}ms" data-id="${p.id}" tabindex="0">
+      return `<article class="p-card" data-id="${p.id}" tabindex="0">
       <div class="p-media${p.cover ? " cv" : ""}${p.link ? " vid" : ""}" style="background:${p.bg}"><span class="tag">${p.tag}</span>${media}</div>
       <div class="p-body"><h3>${p.title}</h3><div class="tl">${p.tagline}</div><p>${p.short}</p>
       <div class="metrics">${p.stack
@@ -681,63 +727,19 @@ function renderProjects(f = "all") {
     })
     .join("");
   $$("#projGrid .p-card").forEach((c) => {
-    c.onclick = () => openProject(c.dataset.id);
-    c.onkeydown = (e) => {
+    on(c, "click", () => openProject(c.dataset.id));
+    on(c, "keydown", (e) => {
       if (e.key === "Enter") openProject(c.dataset.id);
-    };
+    });
   });
 }
-$$("#projTabs .tab").forEach(
-  (b) =>
-    (b.onclick = () => {
-      $$("#projTabs .tab").forEach((x) =>
-        x.classList.toggle("active", x === b),
-      );
-      renderProjects(b.dataset.f);
-    }),
+$$("#projTabs .tab").forEach((b) =>
+  on(b, "click", () => {
+    $$("#projTabs .tab").forEach((x) => x.classList.toggle("active", x === b));
+    renderProjects(b.dataset.f);
+  }),
 );
 renderProjects();
-
-/* EXPERIENCE */
-function renderExp() {
-  const list = EXPERIENCES;
-  $("#expGrid").innerHTML = list
-    .map(
-      (e, i) => `
-    <article class="p-card e-card" style="animation-delay:${i * 70}ms" data-id="${e.id}" tabindex="0">
-      <div class="p-media">${img(e.imgs[0], "photo", e.title)}</div>
-      <div class="p-body"><div class="e-org">${e.org}</div><h3>${e.title}</h3>
-      <div class="metrics">${e.metrics.map((m) => `<span class="metric">${m}</span>`).join("")}</div>
-      <span class="more">Read more</span></div></article>`,
-    )
-    .join("");
-  $$("#expGrid .p-card").forEach((c) => {
-    c.onclick = () => openExp(c.dataset.id);
-    c.onkeydown = (e) => {
-      if (e.key === "Enter") openExp(c.dataset.id);
-    };
-  });
-}
-renderExp();
-
-/* MODAL */
-const modal = $("#modal");
-function openModal(html) {
-  $("#modalBody").innerHTML = html;
-  modal.classList.add("open");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-  modal.querySelector(".modal-box").scrollTop = 0;
-}
-function closeModal() {
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
-$("#modalX").onclick = closeModal;
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) closeModal();
-});
 
 function openGallery(p) {
   openModal(`<div class="m-hero cover" style="background:${p.bg}">${img(p.imgs[0], "", p.title)}</div>
@@ -769,6 +771,27 @@ function openProject(id) {
     <ul>${p.points.map((x) => `<li>${x}</li>`).join("")}</ul>
     <div class="stack">${p.stack.map((s) => `<span>${s}</span>`).join("")}</div></div>`);
 }
+/* =========================================================
+   EXPERIENCE PAGE (+ certificates)
+   ========================================================= */
+function renderExp() {
+  const grid = $("#expGrid");
+  if (!grid) return;
+  grid.innerHTML = EXPERIENCES.map(
+    (e) => `
+    <article class="p-card e-card" data-id="${e.id}" tabindex="0">
+      <div class="p-media">${img(e.imgs[0], "photo", e.title)}</div>
+      <div class="p-body"><div class="e-org">${e.org}</div><h3>${e.title}</h3>
+      <div class="metrics">${e.metrics.map((m) => `<span class="metric">${m}</span>`).join("")}</div>
+      <span class="more">Read more</span></div></article>`,
+  ).join("");
+  $$("#expGrid .p-card").forEach((c) => {
+    on(c, "click", () => openExp(c.dataset.id));
+    on(c, "keydown", (e) => {
+      if (e.key === "Enter") openExp(c.dataset.id);
+    });
+  });
+}
 function openExp(id) {
   const e = EXPERIENCES.find((x) => x.id === id);
   openModal(`<div class="m-hero photos">${e.imgs.map((n) => img(n, "", e.title)).join("")}</div>
@@ -778,67 +801,21 @@ function openExp(id) {
     <div class="stack">${e.metrics.map((s) => `<span>${s}</span>`).join("")}</div></div>`);
   $$(".m-hero.photos img").forEach(
     (im) =>
-      (im.onclick = () => openLightbox([{ src: im.src, title: e.title }], 0)),
+      on(im, "click", () => openLightbox([{ src: im.src, title: e.title }], 0)),
   );
 }
 
-/* LIGHTBOX */
-const lb = $("#lightbox");
-let lbList = [],
-  lbI = 0;
-function showLb() {
-  const c = lbList[lbI];
-  $("#lbImg").src = c.src;
-  $("#lbCap").textContent = c.title;
-  const multi = lbList.length > 1;
-  $("#lbPrev").style.display = $("#lbNext").style.display = multi ? "" : "none";
-}
-function openLightbox(list, i) {
-  lbList = list;
-  lbI = i;
-  showLb();
-  lb.classList.add("open");
-  lb.setAttribute("aria-hidden", "false");
-}
-function closeLb() {
-  lb.classList.remove("open");
-  lb.setAttribute("aria-hidden", "true");
-}
-const step = (d) => {
-  lbI = (lbI + d + lbList.length) % lbList.length;
-  showLb();
-};
-$("#lbX").onclick = closeLb;
-$("#lbPrev").onclick = () => step(-1);
-$("#lbNext").onclick = () => step(1);
-lb.addEventListener("click", (e) => {
-  if (e.target === lb) closeLb();
-});
-addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeLb();
-    closeModal();
-  }
-  if (lb.classList.contains("open")) {
-    if (e.key === "ArrowLeft") step(-1);
-    if (e.key === "ArrowRight") step(1);
-  }
-});
+renderExp();
 
-/* CERTIFICATES + CV */
-$("#certGrid").innerHTML = CERTS.map(
-  (c, i) => `
-  <figure class="cert reveal" data-i="${i}"><img src="${c.src}" alt="${c.title}" loading="lazy"><span>${c.title}</span></figure>`,
-).join("");
-$$(".cert").forEach((el) => {
-  io.observe(el);
-  el.onclick = () => openLightbox(CERTS, +el.dataset.i);
-});
-$("#cvOpen").onclick = () =>
-  openLightbox(
-    [{ src: "assets/cv/cv.webp", title: "Curriculum Vitae — Vegen Fendianto" }],
-    0,
+if ($("#certGrid")) {
+  $("#certGrid").innerHTML = CERTS.map(
+    (c, i) => `
+  <figure class="cert" data-i="${i}"><img src="${c.src}" alt="${c.title}" loading="lazy"><span>${c.title}</span></figure>`,
+  ).join("");
+  $$(".cert").forEach((el) =>
+    on(el, "click", () => openLightbox(CERTS, +el.dataset.i)),
   );
+}
 
 /* CONTACT */
 /* Gmail card -> opens a new email addressed to MAIL_TO, depending on the device:
@@ -846,7 +823,7 @@ $("#cvOpen").onclick = () =>
    iPhone/iPad = Gmail app (falls back to the default mail app) */
 const MAIL_TO = "vfendianto@gmail.com";
 const MAIL_SUBJECT = "Hello Vegen";
-$("#gmailLink").onclick = (e) => {
+on($("#gmailLink"), "click", (e) => {
   const ua = navigator.userAgent;
   const isAndroid = /Android/i.test(ua);
   const isIOS =
@@ -868,11 +845,11 @@ $("#gmailLink").onclick = (e) => {
       "noopener",
     );
   }
-};
+});
 
 /* Send form -> WhatsApp (change the number here if needed) */
 const WA_NUMBER = "6287808086633";
-$("#mailForm").onsubmit = (e) => {
+on($("#mailForm"), "submit", (e) => {
   e.preventDefault();
   const n = $("#fName").value.trim(),
     em = $("#fEmail").value.trim(),
@@ -884,5 +861,4 @@ $("#mailForm").onsubmit = (e) => {
     "noopener",
   );
   toast("Opening WhatsApp…");
-};
-$("#yr").textContent = new Date().getFullYear();
+});

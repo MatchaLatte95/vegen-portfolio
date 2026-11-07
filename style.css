@@ -61,15 +61,6 @@ em {
   font-size: 0.9rem;
 }
 
-.progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 4px;
-  width: 0;
-  background: linear-gradient(90deg, var(--yellow), var(--blue));
-  z-index: 200;
-}
 
 /* NAV */
 .nav-wrap {
@@ -561,23 +552,12 @@ h1 em {
   border-radius: 999px;
   font-size: 0.88rem;
   font-weight: 500;
-  animation: pop 0.4s both;
   transition: 0.2s;
 }
 .chip:hover {
   background: var(--yellow);
   transform: scale(1.07) rotate(-2deg);
   color: #14183a;
-}
-@keyframes pop {
-  from {
-    opacity: 0;
-    transform: scale(0.6);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 .cv-thumb {
   position: relative;
@@ -665,22 +645,11 @@ h1 em {
   transition:
     transform 0.3s,
     box-shadow 0.3s;
-  animation: rise 0.6s both;
   position: relative;
 }
 .p-card:hover {
   transform: translateY(-10px);
   box-shadow: var(--shadow-l);
-}
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 .p-media {
   position: relative;
@@ -1333,18 +1302,6 @@ h1 em {
   transform: translateY(-50%);
 }
 
-/* REVEAL */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition:
-    opacity 0.8s,
-    transform 0.8s;
-}
-.reveal.in {
-  opacity: 1;
-  transform: none;
-}
 
 /* RESPONSIVE */
 @media (max-width: 980px) {
@@ -1442,10 +1399,6 @@ h1 em {
     animation: none !important;
     transition: none !important;
   }
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 /* LOGO GRID (Software / Tools) */
@@ -1466,7 +1419,6 @@ h1 em {
   place-items: center;
   padding: 12px;
   box-shadow: 0 4px 12px rgba(26, 63, 196, 0.08);
-  animation: pop 0.45s both;
   transition: 0.3s;
   overflow: hidden;
   cursor: default;
@@ -1625,4 +1577,140 @@ h1 em {
 }
 .p-card:hover .p-media.vid::after {
   transform: scale(1.12);
+}
+/* ===== PAGE HEADERS (Projects / Experience) ===== */
+.page-hero {
+  position: relative;
+  padding: 150px 0 40px;
+  text-align: center;
+  background: linear-gradient(160deg, var(--yellow-l), var(--bg) 65%);
+  overflow: hidden;
+}
+.page-hero .blob.b1 {
+  top: -120px;
+  right: -140px;
+  width: 420px;
+  height: 420px;
+}
+.page-hero .container {
+  position: relative;
+  z-index: 2;
+}
+.page-hero h1 {
+  font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+  margin: 6px 0 8px;
+}
+.page-hero p {
+  color: var(--muted);
+  max-width: 620px;
+  margin: 0 auto;
+}
+.section.tight {
+  padding: 40px 0 90px;
+}
+.subnav {
+  display: inline-flex;
+  gap: 8px;
+  margin-top: 22px;
+  background: var(--card);
+  padding: 6px;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+}
+.subnav a {
+  padding: 8px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--muted);
+  transition: 0.25s;
+}
+.subnav a:hover {
+  background: var(--blue);
+  color: #fff;
+}
+
+/* ===== EXPLORE CARDS (home) ===== */
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+.explore-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+}
+.explore-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-l);
+}
+.ex-img {
+  aspect-ratio: 16/8;
+  overflow: hidden;
+  background: var(--bg2);
+}
+.ex-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+.explore-card:hover .ex-img img {
+  transform: scale(1.05);
+}
+.ex-body {
+  padding: 22px 26px 28px;
+}
+.ex-body h3 {
+  font-family: Anton, sans-serif;
+  font-weight: 400;
+  font-size: 2rem;
+  color: var(--blue);
+  margin: 10px 0 4px;
+}
+.ex-body p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.explore-card:hover .more::after {
+  transform: translateX(6px);
+}
+
+/* ===== FOOTER LINKS ===== */
+.foot-links {
+  display: flex;
+  gap: 22px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.foot-links a {
+  color: #fff;
+  font-weight: 500;
+  opacity: 0.85;
+  transition: 0.25s;
+}
+.foot-links a:hover {
+  opacity: 1;
+  color: var(--yellow);
+}
+@media (max-width: 760px) {
+  .explore-grid {
+    grid-template-columns: 1fr;
+  }
+  .burger {
+    margin-left: auto;
+  }
+  .page-hero {
+    padding-top: 130px;
+  }
 }

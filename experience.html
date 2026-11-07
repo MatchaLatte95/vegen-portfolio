@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Experience — Vegen Fendianto</title>
+    <meta name="description" content="Leadership, mentoring and creative experience, plus certificates, of Vegen Fendianto." />
+    <meta property="og:title" content="Experience — Vegen Fendianto" />
+    <meta property="og:description" content="Leadership, mentoring and creative experience, plus certificates, of Vegen Fendianto." />
+    <meta property="og:image" content="assets/profile/profile.webp" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%231a3fc4'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23ffc928' font-family='Arial' font-weight='900'>V</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="experience">
+
+    <!-- NAVBAR -->
+    <header class="nav-wrap">
+      <nav class="nav" id="nav">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" data-nav="home">Profile</a></li>
+          <li><a href="projects.html" data-nav="projects">Projects</a></li>
+          <li><a href="experience.html" data-nav="experience">Experience</a></li>
+          <li><a href="index.html#contact" data-nav="contact">Contact</a></li>
+        </ul>
+        <button class="burger" id="burger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="blob b1"></div>
+        <div class="container">
+          <span class="pill">✱ Experience ✱</span>
+          <h1>Where I've <em>led</em> &amp; <em>learned</em></h1>
+          <p>My full journey of leading, mentoring, and creating — the experiences that shaped how I work with people.</p>
+          <div class="subnav">
+            <a href="#experience-list">Experience</a>
+            <a href="#certificates">Certificates</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section tight" id="experience-list">
+        <div class="container">
+          <div class="grid exp-grid" id="expGrid"></div>
+        </div>
+      </section>
+
+      <section class="section alt" id="certificates">
+        <div class="container">
+          <header class="sec-head">
+            <span class="pill">✱ Certificates ✱</span>
+            <h2>Proof of <em>progress</em></h2>
+            <p>Tap a certificate to view it in full size.</p>
+          </header>
+          <div class="cert-grid" id="certGrid"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="foot-links">
+        <a href="index.html">Profile</a>
+        <a href="projects.html">Projects</a>
+        <a href="experience.html">Experience</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <p>© <span id="yr"></span> Vegen Fendianto — Built with ♥ and lots of coffee.</p>
+    </footer>
+    <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+    <div class="toast" id="toast"></div>
+
+    <!-- MODAL -->
+    <div class="modal" id="modal" aria-hidden="true">
+      <div class="modal-box" role="dialog" aria-modal="true">
+        <button class="modal-x" id="modalX" aria-label="Close">✕</button>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <button class="lb-x" id="lbX" aria-label="Close">✕</button>
+      <button class="lb-nav prev" id="lbPrev" aria-label="Previous">‹</button>
+      <figure>
+        <img id="lbImg" alt="" />
+        <figcaption id="lbCap"></figcaption>
+      </figure>
+      <button class="lb-nav next" id="lbNext" aria-label="Next">›</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

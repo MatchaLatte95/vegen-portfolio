@@ -4,20 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Vegen Fendianto — Portfolio</title>
-    <meta
-      name="description"
-      content="Portfolio of Vegen Fendianto — Information Systems student at BINUS University, UI/UX Designer & Photographer."
-    />
+    <meta name="description" content="Portfolio of Vegen Fendianto — Information Systems student at BINUS University, UI/UX Designer &amp; Photographer." />
     <meta property="og:title" content="Vegen Fendianto — Portfolio" />
-    <meta
-      property="og:description"
-      content="UI/UX Designer, Web Developer & Photographer. Open for internship."
-    />
+    <meta property="og:description" content="Portfolio of Vegen Fendianto — Information Systems student at BINUS University, UI/UX Designer &amp; Photographer." />
     <meta property="og:image" content="assets/profile/profile.webp" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%231a3fc4'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23ffc928' font-family='Arial' font-weight='900'>V</text></svg>"
-    />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%231a3fc4'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23ffc928' font-family='Arial' font-weight='900'>V</text></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -26,18 +17,16 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div class="progress" id="progress"></div>
+  <body data-page="home">
 
     <!-- NAVBAR -->
     <header class="nav-wrap">
       <nav class="nav" id="nav">
         <ul class="nav-links" id="navLinks">
-          <li><a href="#profile" data-spy="profile">Profile</a></li>
-          <li><a href="#projects" data-spy="projects">Projects</a></li>
-          <li><a href="#experience" data-spy="experience">Experience</a></li>
-          <li><a href="#certificate" data-spy="certificate">Certificate</a></li>
-          <li><a href="#contact" data-spy="contact">Contact</a></li>
+          <li><a href="index.html" data-nav="home">Profile</a></li>
+          <li><a href="projects.html" data-nav="projects">Projects</a></li>
+          <li><a href="experience.html" data-nav="experience">Experience</a></li>
+          <li><a href="index.html#contact" data-nav="contact">Contact</a></li>
         </ul>
         <button class="burger" id="burger" aria-label="Menu">
           <span></span><span></span><span></span>
@@ -53,7 +42,7 @@
         <span class="star s1">✱</span><span class="star s2">✱</span
         ><span class="star s3">✱</span>
         <div class="container hero-grid">
-          <div class="hero-text reveal">
+          <div class="hero-text">
             <span class="hello">👋 Hello Everyone</span>
             <h1>Vegen <em>Fendianto</em></h1>
             <p class="lead">
@@ -66,13 +55,13 @@
               photography and videography.
             </p>
             <div class="hero-cta">
-              <a href="#projects" class="btn btn-primary"
+              <a href="projects.html" class="btn btn-primary"
                 >Take a look <span>→</span></a
               >
               <a href="#contact" class="btn btn-ghost">Let's talk</a>
             </div>
           </div>
-          <div class="hero-photo reveal" id="tiltPhoto">
+          <div class="hero-photo" id="tiltPhoto">
             <div class="photo-bg"></div>
             <img src="assets/profile/profile.webp" alt="Vegen Fendianto" />
             <span class="badge bd1">UI/UX Designer</span>
@@ -83,9 +72,9 @@
       </section>
 
       <!-- ABOUT: education / skills / CV -->
-      <section class="about">
+      <section class="about" id="about">
         <div class="container about-grid">
-          <article class="card edu reveal">
+          <article class="card edu">
             <h3 class="card-title">Education</h3>
             <div class="edu-body">
               <div class="edu-icon">🎓</div>
@@ -105,7 +94,7 @@
             </div>
           </article>
 
-          <article class="card skills reveal">
+          <article class="card skills">
             <h3 class="card-title">Skills</h3>
             <div class="tabs" id="skillTabs">
               <button class="tab active" data-skill="tech">Technical</button>
@@ -115,7 +104,7 @@
             <div class="chips" id="skillChips"></div>
           </article>
 
-          <article class="card cv reveal">
+          <article class="card cv">
             <h3 class="card-title">CV</h3>
             <button class="cv-thumb" id="cvOpen" aria-label="Open CV preview">
               <img src="assets/cv/cv.webp" alt="CV preview" loading="lazy" />
@@ -125,50 +114,34 @@
         </div>
       </section>
 
-      <!-- ============ PROJECTS ============ -->
-      <section id="projects" class="section">
+      <!-- ============ EXPLORE ============ -->
+      <section class="section" id="explore">
         <div class="container">
-          <header class="sec-head reveal">
-            <span class="pill">✱ Projects ✱</span>
-            <h2>Things I've <em>designed</em> &amp; <em>built</em></h2>
-            <p>Click any card to see the full story behind the project.</p>
+          <header class="sec-head">
+            <span class="pill">✱ Explore ✱</span>
+            <h2>See what I've <em>done</em></h2>
+            <p>Jump into the full pages for projects, experiences and certificates.</p>
           </header>
-          <div class="tabs center reveal" id="projTabs">
-            <button class="tab active" data-f="all">All</button>
-            <button class="tab" data-f="uiux">UI / UX Design</button>
-            <button class="tab" data-f="code">Programming</button>
-            <button class="tab" data-f="data">Data</button>
-            <button class="tab" data-f="photo">Photography</button>
-            <button class="tab" data-f="video">Videography</button>
+          <div class="explore-grid">
+            <a class="explore-card" href="projects.html">
+              <div class="ex-img"><img src="assets/projects/nudge/cover.webp" alt="Projects preview" loading="lazy" /></div>
+              <div class="ex-body">
+                <span class="metric" id="exProjects">Projects</span>
+                <h3>Projects</h3>
+                <p>UI/UX case studies, web &amp; data projects, photography and videography.</p>
+                <span class="more">Open projects</span>
+              </div>
+            </a>
+            <a class="explore-card" href="experience.html">
+              <div class="ex-img"><img src="assets/experience/fyp/2.webp" alt="Experience preview" loading="lazy" /></div>
+              <div class="ex-body">
+                <span class="metric" id="exExperience">Experience</span>
+                <h3>Experience</h3>
+                <p>Leadership, mentoring and creative roles, plus my certificates.</p>
+                <span class="more">Open experience</span>
+              </div>
+            </a>
           </div>
-          <div class="grid" id="projGrid"></div>
-        </div>
-      </section>
-
-      <!-- ============ EXPERIENCE ============ -->
-      <section id="experience" class="section alt">
-        <div class="container">
-          <header class="sec-head reveal">
-            <span class="pill">✱ Experience ✱</span>
-            <h2>Where I've <em>led</em> &amp; <em>learned</em></h2>
-            <p>
-              My full journey of leading, mentoring, and creating — the
-              experiences that shaped how I work with people.
-            </p>
-          </header>
-          <div class="grid exp-grid" id="expGrid"></div>
-        </div>
-      </section>
-
-      <!-- ============ CERTIFICATE ============ -->
-      <section id="certificate" class="section">
-        <div class="container">
-          <header class="sec-head reveal">
-            <span class="pill">✱ Certificate ✱</span>
-            <h2>Proof of <em>progress</em></h2>
-            <p>Tap a certificate to view it in full size.</p>
-          </header>
-          <div class="cert-grid" id="certGrid"></div>
         </div>
       </section>
 
@@ -176,7 +149,7 @@
       <section id="contact" class="contact">
         <div class="blob b3"></div>
         <div class="container contact-grid">
-          <div class="contact-img reveal" aria-hidden="true">
+          <div class="contact-img" aria-hidden="true">
             <div class="deco-blob d1"></div>
             <div class="deco-blob d2"></div>
             <div class="deco-ring"></div>
@@ -186,7 +159,7 @@
             <span class="deco-chip dc1">👋 Say hello</span>
             <span class="deco-chip dc2">Let's build together</span>
           </div>
-          <div class="contact-body reveal">
+          <div class="contact-body">
             <h2>Thank <em>You</em></h2>
             <p class="sub">
               Undergraduate Information Systems @ BINUS University
@@ -265,7 +238,13 @@
     </main>
 
     <footer class="footer">
-      © <span id="yr"></span> Vegen Fendianto — Built with ♥ and lots of coffee.
+      <div class="foot-links">
+        <a href="index.html">Profile</a>
+        <a href="projects.html">Projects</a>
+        <a href="experience.html">Experience</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <p>© <span id="yr"></span> Vegen Fendianto — Built with ♥ and lots of coffee.</p>
     </footer>
     <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
     <div class="toast" id="toast"></div>
