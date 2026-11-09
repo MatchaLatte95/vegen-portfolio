@@ -86,6 +86,7 @@ const PROJECTS = [
   },
   {
     id: "rudy",
+    proto: "https://www.figma.com/proto/L3tlVY5rEq2AlocHpk5y2B/Untitled?t=iko7nqAin2fMaQ9A-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&node-id=42-724&starting-point-node-id=339%3A808",
     cat: "uiux",
     tag: "UI / UX Design",
     title: "Rudy",
@@ -732,12 +733,11 @@ addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight") step(1);
   }
 });
-on($("#cvOpen"), "click", () =>
-  openLightbox(
-    [{ src: "assets/cv/cv.webp", title: "Curriculum Vitae — Vegen Fendianto" }],
-    0,
-  ),
-);
+const CV_PAGES = [
+  { src: "assets/cv/cv-1.webp", title: "Curriculum Vitae — Page 1 / 2" },
+  { src: "assets/cv/cv-2.webp", title: "Curriculum Vitae — Page 2 / 2" },
+];
+on($("#cvOpen"), "click", () => openLightbox(CV_PAGES, 0));
 
 /* =========================================================
    PROJECTS PAGE

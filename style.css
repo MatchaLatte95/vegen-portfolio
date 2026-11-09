@@ -2091,3 +2091,14 @@ h1 em {
 .proto-btn:hover span {
   transform: translate(3px, -3px);
 }
+
+/* ===== CV download ===== */
+.cv-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+.cv-actions .btn {
+  width: 100%;
+  justify-content: center;
+}
