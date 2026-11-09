@@ -66,6 +66,7 @@ const GALLERY_VOLUNTEER = makeGallery("volunteer", 10, "Volunteer");
 const PROJECTS = [
   {
     id: "voyago",
+    proto: "https://www.figma.com/proto/tamWi8qWILLeCvk4FHdogi/GSLC-UIUX-Session-17-18?node-id=7-2&t=X6OI1KougqMEDt0I-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=7%3A2",
     cat: "uiux",
     tag: "UI / UX Design",
     title: "Voyago",
@@ -104,6 +105,7 @@ const PROJECTS = [
   },
   {
     id: "identicare",
+    proto: "https://www.figma.com/proto/VywIrUscBxEnhi3WEMpX7F/IdentiCare?node-id=146-620&starting-point-node-id=100%3A474&scaling=contain&content-scaling=responsive&t=wGkvZGUXv4CbkzNx-1",
     cat: "uiux",
     tag: "UI / UX Design",
     title: "IDENTICARE",
@@ -122,6 +124,7 @@ const PROJECTS = [
   },
   {
     id: "cinevo",
+    proto: "https://www.figma.com/proto/wdLBnrJcXG2iYJjQp0sSGl?node-id=0-1&t=ZhFktFmAa3QknNhc-6",
     cat: "uiux",
     tag: "UI / UX Design",
     title: "Cinevo",
@@ -141,6 +144,7 @@ const PROJECTS = [
   },
   {
     id: "nudge",
+    proto: "https://www.figma.com/proto/3XgR1lR6B35ij4L7NxbuEx?node-id=84-3&t=ZhFktFmAa3QknNhc-6",
     cat: "uiux",
     tag: "UI / UX Design",
     title: "Nudge",
@@ -611,11 +615,58 @@ $$("#skillTabs .tab").forEach((b) =>
 );
 renderSkills("tech");
 
-/* explore cards: live counts */
+/* explore cards: live counts + rolling preview slideshow */
 if ($("#exProjects")) {
   $("#exProjects").textContent = `${PROJECTS.length} Projects`;
   $("#exExperience").textContent = `${EXPERIENCES.length} Experiences · ${CERTS.length} Certificates`;
 }
+(() => {
+  const feeds = {
+    projects: PROJECTS.map((p) => ({ src: p.imgs[0], title: p.title, sub: p.tagline })),
+    experience: EXPERIENCES.map((e) => ({ src: e.imgs[0], title: e.title, sub: e.org })),
+  };
+  const delays = { projects: 3600, experience: 4400 }; // offset so both cards don't flip together
+  $$(".explore-card[data-feed]").forEach((card) => {
+    const key = card.dataset.feed,
+      items = feeds[key];
+    if (!items || !items.length) return;
+    const box = $(".ex-slides", card);
+    box.innerHTML = items
+      .map((it, i) => `<img class="ex-slide${i === 0 ? " active" : ""}" src="assets/${it.src}.webp" alt="${it.title}" ${i === 0 ? "" : 'loading="lazy"'}>`)
+      .join("");
+    const slides = $$(".ex-slide", box);
+    let idx = 0,
+      hover = false,
+      visible = false,
+      timer = null;
+    function show(i) {
+      idx = (i + items.length) % items.length;
+      slides.forEach((s, k) => s.classList.toggle("active", k === idx));
+      $(".ex-title", card).textContent = items[idx].title;
+      $(".ex-sub", card).textContent = items[idx].sub;
+      $(".ex-count", card).textContent = `${String(idx + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
+    }
+    function restart() {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        if (!hover && visible && !document.hidden) show(idx + 1);
+      }, delays[key] || 4000);
+    }
+    on($(".ex-prev", card), "click", () => {
+      show(idx - 1);
+      restart();
+    });
+    on($(".ex-next", card), "click", () => {
+      show(idx + 1);
+      restart();
+    });
+    on(card, "mouseenter", () => (hover = true));
+    on(card, "mouseleave", () => (hover = false));
+    new IntersectionObserver((es) => es.forEach((e) => (visible = e.isIntersecting)), { threshold: 0.3 }).observe(card);
+    show(0);
+    restart();
+  });
+})();
 
 /* =========================================================
    MODAL + LIGHTBOX (shared)
@@ -694,7 +745,8 @@ on($("#cvOpen"), "click", () =>
 function renderProjects(f = "all") {
   const grid = $("#projGrid");
   if (!grid) return;
-  const list = PROJECTS.filter((p) => f === "all" || p.cat === f);
+  const DEV = ["uiux", "code", "data"]; // photo & video live in their own slideshow section
+  const list = PROJECTS.filter((p) => DEV.includes(p.cat) && (f === "all" || p.cat === f));
   if (!list.length) {
     grid.innerHTML = `<div class="empty-state">
       <div class="empty-icon">🎬</div>
@@ -723,12 +775,20 @@ function renderProjects(f = "all") {
         .slice(0, 3)
         .map((s) => `<span class="metric">${s}</span>`)
         .join("")}</div>
-      <span class="more">${p.gallery ? "View gallery" : p.link ? p.linkLabel : "View details"}</span></div></article>`;
+      <div class="card-actions"><span class="more">${p.gallery ? "View gallery" : p.link ? p.linkLabel : "View details"}</span>${
+        p.proto
+          ? `<a class="proto-link" href="${p.proto}" target="_blank" rel="noopener noreferrer" aria-label="Open ${p.title} prototype in Figma">Prototype <span>↗</span></a>`
+          : ""
+      }</div></div></article>`;
     })
     .join("");
   $$("#projGrid .p-card").forEach((c) => {
-    on(c, "click", () => openProject(c.dataset.id));
+    on(c, "click", (e) => {
+      if (e.target.closest(".proto-link")) return; // go straight to the prototype
+      openProject(c.dataset.id);
+    });
     on(c, "keydown", (e) => {
+      if (e.target.closest(".proto-link")) return;
       if (e.key === "Enter") openProject(c.dataset.id);
     });
   });
@@ -740,6 +800,119 @@ $$("#projTabs .tab").forEach((b) =>
   }),
 );
 renderProjects();
+
+/* =========================================================
+   PHOTOGRAPHY & VIDEOGRAPHY SLIDESHOW
+   ========================================================= */
+function initSlideshow() {
+  const root = $("#slideshow");
+  if (!root) return;
+  const slidesEl = $("#slides"),
+    thumbsEl = $("#thumbs"),
+    countEl = $("#ssCount");
+  const DELAY = 5500;
+  let filter = "all",
+    idx = 0,
+    items = [],
+    timer = null,
+    hover = false,
+    visible = false;
+
+  function build() {
+    items = PROJECTS.filter(
+      (p) => (p.cat === "photo" || p.cat === "video") && (filter === "all" || p.cat === filter),
+    );
+    slidesEl.innerHTML = items
+      .map((p, i) => {
+        const isVideo = p.cat === "video";
+        const meta = p.gallery ? `${p.gallery.length} photos` : "Video";
+        return `<article class="slide" data-i="${i}" aria-hidden="true">
+          ${img(p.imgs[0], "", p.title)}
+          <div class="slide-cap">
+            <span class="ss-tag">${isVideo ? "▶ Videography" : "◉ Photography"}</span>
+            <h3>${p.title}</h3>
+            <p>${p.tagline} · ${meta}</p>
+            <button class="btn ss-open" data-id="${p.id}">${isVideo ? p.linkLabel || "Watch video" : "View gallery"} <span>→</span></button>
+          </div></article>`;
+      })
+      .join("");
+    thumbsEl.innerHTML = items
+      .map(
+        (p, i) =>
+          `<button class="thumb" data-i="${i}" aria-label="${p.title}">${img(p.imgs[0], "", p.title)}<span>${p.title}</span></button>`,
+      )
+      .join("");
+    $$(".ss-open", slidesEl).forEach((b) => on(b, "click", () => openProject(b.dataset.id)));
+    $$(".thumb", thumbsEl).forEach((b) => on(b, "click", () => go(+b.dataset.i)));
+    show(0);
+  }
+
+  function show(i) {
+    if (!items.length) return;
+    idx = (i + items.length) % items.length;
+    $$(".slide", slidesEl).forEach((s, k) => {
+      const active = k === idx;
+      s.classList.toggle("active", active);
+      s.setAttribute("aria-hidden", active ? "false" : "true");
+    });
+    $$(".thumb", thumbsEl).forEach((t, k) => t.classList.toggle("active", k === idx));
+    const t = thumbsEl.children[idx];
+    if (t)
+      thumbsEl.scrollTo({
+        left: t.offsetLeft - (thumbsEl.clientWidth - t.clientWidth) / 2,
+        behavior: "smooth",
+      });
+    countEl.textContent = `${String(idx + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
+  }
+
+  function restart() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+      if (!hover && visible && !document.hidden) show(idx + 1);
+    }, DELAY);
+  }
+  function go(i) {
+    show(i);
+    restart();
+  }
+
+  on($("#ssPrev"), "click", () => go(idx - 1));
+  on($("#ssNext"), "click", () => go(idx + 1));
+  on(root, "mouseenter", () => (hover = true));
+  on(root, "mouseleave", () => (hover = false));
+  on(root, "focusin", () => (hover = true));
+  on(root, "focusout", () => (hover = false));
+  on(root, "keydown", (e) => {
+    if (e.key === "ArrowLeft") go(idx - 1);
+    if (e.key === "ArrowRight") go(idx + 1);
+  });
+  let sx = null;
+  on(root, "pointerdown", (e) => (sx = e.clientX));
+  on(root, "pointerup", (e) => {
+    if (sx === null) return;
+    const dx = e.clientX - sx;
+    sx = null;
+    if (Math.abs(dx) > 50) go(idx + (dx < 0 ? 1 : -1));
+  });
+  on(root, "pointercancel", () => (sx = null));
+
+  $$("#mediaTabs .tab").forEach((b) =>
+    on(b, "click", () => {
+      $$("#mediaTabs .tab").forEach((x) => x.classList.toggle("active", x === b));
+      filter = b.dataset.f;
+      build();
+      restart();
+    }),
+  );
+  // only auto-advance while the slideshow is actually on screen
+  new IntersectionObserver((es) => es.forEach((e) => (visible = e.isIntersecting)), {
+    threshold: 0.3,
+  }).observe(root);
+
+  build();
+  restart();
+}
+initSlideshow();
 
 function openGallery(p) {
   openModal(`<div class="m-hero cover" style="background:${p.bg}">${img(p.imgs[0], "", p.title)}</div>
@@ -769,6 +942,11 @@ function openProject(id) {
     <div class="m-body"><span class="metric">${p.tag}</span>
     <h3>${p.title}</h3><div class="tl">${p.tagline}</div>
     <ul>${p.points.map((x) => `<li>${x}</li>`).join("")}</ul>
+    ${
+      p.proto
+        ? `<a class="btn btn-primary proto-btn" href="${p.proto}" target="_blank" rel="noopener noreferrer">Open Prototype in Figma <span>↗</span></a>`
+        : ""
+    }
     <div class="stack">${p.stack.map((s) => `<span>${s}</span>`).join("")}</div></div>`);
 }
 /* =========================================================

@@ -41,19 +41,48 @@
           <span class="pill">✱ Projects ✱</span>
           <h1>Things I've <em>designed</em> &amp; <em>built</em></h1>
           <p>Click any card to see the full story behind the project.</p>
+          <div class="subnav">
+            <a href="#dev">Design &amp; Development</a>
+            <a href="#media">Photography &amp; Videography</a>
+          </div>
         </div>
       </section>
-      <section class="section tight">
+      <section class="section tight" id="dev">
         <div class="container">
+          <header class="sec-head">
+            <span class="pill">✱ Design &amp; Development ✱</span>
+            <h2>UI/UX, <em>code</em> &amp; <em>data</em></h2>
+          </header>
           <div class="tabs center" id="projTabs">
             <button class="tab active" data-f="all">All</button>
             <button class="tab" data-f="uiux">UI / UX Design</button>
             <button class="tab" data-f="code">Programming</button>
             <button class="tab" data-f="data">Data</button>
+          </div>
+          <div class="grid" id="projGrid"></div>
+        </div>
+      </section>
+
+      <!-- ============ PHOTOGRAPHY & VIDEOGRAPHY ============ -->
+      <section class="media-section" id="media">
+        <div class="container">
+          <header class="sec-head">
+            <span class="pill">✱ Photography &amp; Videography ✱</span>
+            <h2>Moments I've <em>captured</em></h2>
+            <p>Highlights from my events, projects and communities — tap a slide to open the full gallery or video.</p>
+          </header>
+          <div class="tabs center" id="mediaTabs">
+            <button class="tab active" data-f="all">All</button>
             <button class="tab" data-f="photo">Photography</button>
             <button class="tab" data-f="video">Videography</button>
           </div>
-          <div class="grid" id="projGrid"></div>
+          <div class="slideshow" id="slideshow" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Photography and videography highlights">
+            <div class="slides" id="slides"></div>
+            <button class="ss-nav ss-prev" id="ssPrev" aria-label="Previous slide">‹</button>
+            <button class="ss-nav ss-next" id="ssNext" aria-label="Next slide">›</button>
+            <div class="ss-count" id="ssCount"></div>
+          </div>
+          <div class="thumbs" id="thumbs"></div>
         </div>
       </section>
     </main>
