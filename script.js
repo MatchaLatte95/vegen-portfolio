@@ -86,7 +86,7 @@ const PROJECTS = [
   },
   {
     id: "rudy",
-    proto: "https://www.figma.com/proto/L3tlVY5rEq2AlocHpk5y2B/Untitled?t=iko7nqAin2fMaQ9A-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&node-id=42-724&starting-point-node-id=339%3A808",
+    proto: "https://www.figma.com/proto/L3tlVY5rEq2AlocHpk5y2B?node-id=0-1&t=L6TNoSERzBRX9Y5D-6",
     cat: "uiux",
     tag: "UI / UX Design",
     title: "Rudy",
@@ -1039,4 +1039,4 @@ on($("#mailForm"), "submit", (e) => {
     "noopener",
   );
   toast("Opening WhatsApp…");
-});
+}); 
