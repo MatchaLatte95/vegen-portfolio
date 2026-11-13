@@ -66,6 +66,7 @@ const GALLERY_VOLUNTEER = makeGallery("volunteer", 10, "Volunteer");
 const PROJECTS = [
   {
     id: "voyago",
+    extraTags: ["Redesign"],
     proto: "https://www.figma.com/proto/tamWi8qWILLeCvk4FHdogi/GSLC-UIUX-Session-17-18?node-id=7-2&t=X6OI1KougqMEDt0I-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=7%3A2",
     cat: "uiux",
     tag: "UI / UX Design",
@@ -86,7 +87,8 @@ const PROJECTS = [
   },
   {
     id: "rudy",
-    proto: "https://www.figma.com/proto/L3tlVY5rEq2AlocHpk5y2B?node-id=0-1&t=L6TNoSERzBRX9Y5D-6",
+    extraTags: ["Business Analysis"],
+    proto: "https://www.figma.com/proto/L3tlVY5rEq2AlocHpk5y2B/Untitled?t=iko7nqAin2fMaQ9A-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&node-id=42-724&starting-point-node-id=339%3A808",
     cat: "uiux",
     tag: "UI / UX Design",
     title: "Rudy",
@@ -106,6 +108,7 @@ const PROJECTS = [
   },
   {
     id: "identicare",
+    extraTags: ["Business Analysis"],
     proto: "https://www.figma.com/proto/VywIrUscBxEnhi3WEMpX7F/IdentiCare?node-id=146-620&starting-point-node-id=100%3A474&scaling=contain&content-scaling=responsive&t=wGkvZGUXv4CbkzNx-1",
     cat: "uiux",
     tag: "UI / UX Design",
@@ -125,6 +128,7 @@ const PROJECTS = [
   },
   {
     id: "cinevo",
+    extraTags: ["Redesign"],
     proto: "https://www.figma.com/proto/wdLBnrJcXG2iYJjQp0sSGl?node-id=0-1&t=ZhFktFmAa3QknNhc-6",
     cat: "uiux",
     tag: "UI / UX Design",
@@ -145,6 +149,7 @@ const PROJECTS = [
   },
   {
     id: "nudge",
+    extraTags: ["Business Analysis"],
     proto: "https://www.figma.com/proto/3XgR1lR6B35ij4L7NxbuEx?node-id=84-3&t=ZhFktFmAa3QknNhc-6",
     cat: "uiux",
     tag: "UI / UX Design",
@@ -165,6 +170,7 @@ const PROJECTS = [
   },
   {
     id: "kenang",
+    extraTags: ["Business Analysis"],
     cat: "uiux",
     tag: "UI / UX Design",
     title: "Kenang",
@@ -769,7 +775,7 @@ function renderProjects(f = "all") {
             .join("")
         : `<span style="font-size:6rem;align-self:center;margin:auto">${p.icon}</span>`;
       return `<article class="p-card" data-id="${p.id}" tabindex="0">
-      <div class="p-media${p.cover ? " cv" : ""}${p.link ? " vid" : ""}" style="background:${p.bg}"><span class="tag">${p.tag}</span>${media}</div>
+      <div class="p-media${p.cover ? " cv" : ""}${p.link ? " vid" : ""}" style="background:${p.bg}"><div class="tags"><span class="tag">${p.tag}</span>${(p.extraTags || []).map((t) => `<span class="tag tag-extra">${t}</span>`).join("")}</div>${media}</div>
       <div class="p-body"><h3>${p.title}</h3><div class="tl">${p.tagline}</div><p>${p.short}</p>
       <div class="metrics">${p.stack
         .slice(0, 3)
@@ -916,7 +922,7 @@ initSlideshow();
 
 function openGallery(p) {
   openModal(`<div class="m-hero cover" style="background:${p.bg}">${img(p.imgs[0], "", p.title)}</div>
-    <div class="m-body"><span class="metric">${p.tag}</span>
+    <div class="m-body"><span class="metric">${p.tag}</span>${(p.extraTags || []).map((t) => ` <span class="metric metric-extra">${t}</span>`).join("")}
     <h3>${p.title}</h3><div class="tl">${p.tagline}</div>
     <ul>${p.points.map((x) => `<li>${x}</li>`).join("")}</ul>
     <div class="stack">${p.stack.map((t) => `<span>${t}</span>`).join("")}</div>
@@ -939,7 +945,7 @@ function openProject(id) {
     ? p.imgs.map((n) => img(n, "", p.title)).join("")
     : `<span style="font-size:8rem;margin:auto">${p.icon}</span>`;
   openModal(`<div class="m-hero${p.cover ? " cover" : ""}" style="background:${p.bg}">${hero}</div>
-    <div class="m-body"><span class="metric">${p.tag}</span>
+    <div class="m-body"><span class="metric">${p.tag}</span>${(p.extraTags || []).map((t) => ` <span class="metric metric-extra">${t}</span>`).join("")}
     <h3>${p.title}</h3><div class="tl">${p.tagline}</div>
     <ul>${p.points.map((x) => `<li>${x}</li>`).join("")}</ul>
     ${
@@ -1039,4 +1045,4 @@ on($("#mailForm"), "submit", (e) => {
     "noopener",
   );
   toast("Opening WhatsApp…");
-}); 
+});
