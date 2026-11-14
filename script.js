@@ -65,6 +65,101 @@ const GALLERY_VOLUNTEER = makeGallery("volunteer", 10, "Volunteer");
 
 const PROJECTS = [
   {
+    id: "invoice-rpa",
+    extraTags: ["UiPath"],
+    demo: "https://drive.google.com/file/d/1BQ1knACLKHLHh9Qj721iMBtbrt1MjhFY/view?usp=drive_link",
+    cat: "rpa",
+    tag: "RPA / Automation",
+    title: "Invoice Processing Automation",
+    tagline: "PT Nusantara Solusi · Producer–Consumer",
+    bg: "linear-gradient(135deg,#0a1450,#1a3fc4)",
+    imgs: ["projects/rpa-invoice/cover"],
+    cover: true,
+    short:
+      "A UiPath robot that replaces a manual invoice routine with a Producer–Consumer pipeline: Excel data in, Word invoices, summary report and audit log out.",
+    sections: [
+      {
+        title: "Business Overview",
+        points: [
+          "PT Nusantara Solusi distributes IT hardware (laptops, monitors, printers and office accessories) to corporate clients and receives dozens of vendor invoices every month.",
+          "The procurement team handled everything by hand — checking payment status one by one, retyping data into Word templates, consolidating it in separate sheets and saving report files — taking about 4–5 hours a month, prone to human error and hard to scale.",
+          "Management asked for an RPA solution built with UiPath Studio (attended robot, no Orchestrator).",
+        ],
+      },
+      {
+        title: "Outcome",
+        points: [
+          "Reads invoice_data.xlsx from the Input folder, extracts every invoice into an iterable structure, logs how many records were read and handles a missing file gracefully instead of crashing.",
+          "Processes invoices one by one as a queue simulation, logging each item’s identity before it is executed.",
+          "Calculates each invoice’s total and groups invoices by payment status for reporting.",
+          "Fills the Word template (Invoice_Template.docx) with dynamic data and saves one Word invoice per transaction in the Output folder.",
+          "Keeps running when a record cannot be processed: failures are logged with enough detail to trace them, and a full audit log records successes, failures and a final run summary.",
+          "Produces an Excel summary report that separates invoices by status with a grand total, saved with the execution date in the file name — ready for the finance team.",
+        ],
+      },
+      {
+        title: "Tools & Approach",
+        points: [
+          "UiPath Studio (attended robot, no Orchestrator) with a Producer–Consumer design: the Producer reads and prepares the data, the Consumer processes each item.",
+          "Business analysis first: identified the main bottlenecks of the manual process, justified RPA over other solutions and defined the automation boundary between robot and human tasks.",
+          "Excel and Word activities with template placeholders ({{InvoiceNo}}, {{Vendor}}, {{TotalAmount}}, …) so documents can change without touching the workflow.",
+          "Per-item exception handling plus audit logging for traceability and compliance.",
+          "Queue-style processing designed so it can move to Orchestrator queues later, and evaluated for effectiveness, scalability and reliability.",
+        ],
+      },
+    ],
+    stack: [
+      "UiPath",
+      "Producer–Consumer",
+      "Excel",
+      "Word Templates",
+      "Exception Handling",
+      "Audit Log",
+    ],
+  },
+  {
+    id: "email-rpa",
+    extraTags: ["UiPath"],
+    demo: "https://drive.google.com/file/d/1G-ryKOWdVcLvAoNau9l49JNwrVkBjU3P/view?usp=sharing",
+    cat: "rpa",
+    tag: "RPA / Automation",
+    title: "Email-to-Website Automation",
+    tagline: "Daily Sales Report · UiPath",
+    bg: "linear-gradient(135deg,#fff6ee,#ffe2cc)",
+    imgs: ["projects/rpa-email/cover"],
+    cover: true,
+    short:
+      "A UiPath robot that picks up “Daily Sales Report” emails, saves the attachment and enters every Excel row into a website form automatically.",
+    sections: [
+      {
+        title: "Business Overview",
+        points: [
+          "Daily sales data arrives by email as an Excel/CSV attachment and then has to be typed into a web form row by row — a repetitive manual task that is slow and prone to input errors.",
+          "The goal was a robot that reacts to the incoming email and carries out the whole routine without anyone starting it by hand.",
+        ],
+      },
+      {
+        title: "Outcome",
+        points: [
+          "Detects new emails automatically and checks the inbox, so the robot no longer has to be started manually every time a report arrives.",
+          "Filters emails by the subject “Daily Sales Report” and skips any email that has no attachment.",
+          "Downloads the attachment (.xlsx or .csv) and stores it in a folder inside the automation project.",
+          "Reads every row of the file and enters the data into the website form one by one through a loop.",
+        ],
+      },
+      {
+        title: "Tools & Approach",
+        points: [
+          "Built end to end in UiPath Studio, from email handling to web form automation.",
+          "Email activities for reading the inbox, subject filtering and attachment download, with conditional logic to skip emails without attachments.",
+          "Excel / CSV activities to read the whole dataset, then a For Each Row loop to feed the web form.",
+          "Web (UI) automation to open the provided website and fill in each form entry.",
+        ],
+      },
+    ],
+    stack: ["UiPath", "Email Automation", "Excel / CSV", "Web Automation"],
+  },
+  {
     id: "voyago",
     extraTags: ["Redesign"],
     proto: "https://www.figma.com/proto/tamWi8qWILLeCvk4FHdogi/GSLC-UIUX-Session-17-18?node-id=7-2&t=X6OI1KougqMEDt0I-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=7%3A2",
@@ -214,7 +309,7 @@ const PROJECTS = [
     title: "Data Modeling & Dashboard",
     tagline: "Interactive Excel dashboard",
     bg: "linear-gradient(135deg,#dff7d8,#d8f0ff)",
-    imgs: ["projects/dash/1", "projects/dash/2"],
+    imgs: ["projects/dash/1"],
     wide: true,
     short:
       "An interactive Excel dashboard that turns lab and lecture data into clear, decision-ready insights.",
@@ -748,10 +843,28 @@ on($("#cvOpen"), "click", () => openLightbox(CV_PAGES, 0));
 /* =========================================================
    PROJECTS PAGE
    ========================================================= */
+const extLinks = (p) =>
+  [
+    p.proto && {
+      href: p.proto,
+      label: "Prototype",
+      icon: "↗",
+      aria: `Open ${p.title} prototype in Figma`,
+      btn: "Open Prototype in Figma",
+    },
+    p.demo && {
+      href: p.demo,
+      label: "Demo Video",
+      icon: "▶",
+      aria: `Watch ${p.title} demo video`,
+      btn: "Watch Demo Video",
+    },
+  ].filter(Boolean);
+
 function renderProjects(f = "all") {
   const grid = $("#projGrid");
   if (!grid) return;
-  const DEV = ["uiux", "code", "data"]; // photo & video live in their own slideshow section
+  const DEV = ["uiux", "code", "data", "rpa"]; // photo & video live in their own slideshow section
   const list = PROJECTS.filter((p) => DEV.includes(p.cat) && (f === "all" || p.cat === f));
   if (!list.length) {
     grid.innerHTML = `<div class="empty-state">
@@ -781,11 +894,12 @@ function renderProjects(f = "all") {
         .slice(0, 3)
         .map((s) => `<span class="metric">${s}</span>`)
         .join("")}</div>
-      <div class="card-actions"><span class="more">${p.gallery ? "View gallery" : p.link ? p.linkLabel : "View details"}</span>${
-        p.proto
-          ? `<a class="proto-link" href="${p.proto}" target="_blank" rel="noopener noreferrer" aria-label="Open ${p.title} prototype in Figma">Prototype <span>↗</span></a>`
-          : ""
-      }</div></div></article>`;
+      <div class="card-actions"><span class="more">${p.gallery ? "View gallery" : p.link ? p.linkLabel : "View details"}</span>${extLinks(p)
+        .map(
+          (l) =>
+            `<a class="proto-link" href="${l.href}" target="_blank" rel="noopener noreferrer" aria-label="${l.aria}">${l.label} <span>${l.icon}</span></a>`,
+        )
+        .join("")}</div></div></article>`;
     })
     .join("");
   $$("#projGrid .p-card").forEach((c) => {
@@ -947,12 +1061,22 @@ function openProject(id) {
   openModal(`<div class="m-hero${p.cover ? " cover" : ""}" style="background:${p.bg}">${hero}</div>
     <div class="m-body"><span class="metric">${p.tag}</span>${(p.extraTags || []).map((t) => ` <span class="metric metric-extra">${t}</span>`).join("")}
     <h3>${p.title}</h3><div class="tl">${p.tagline}</div>
-    <ul>${p.points.map((x) => `<li>${x}</li>`).join("")}</ul>
     ${
-      p.proto
-        ? `<a class="btn btn-primary proto-btn" href="${p.proto}" target="_blank" rel="noopener noreferrer">Open Prototype in Figma <span>↗</span></a>`
-        : ""
+      p.sections
+        ? p.sections
+            .map(
+              (sec) =>
+                `<h4 class="m-sec">${sec.title}</h4><ul>${sec.points.map((x) => `<li>${x}</li>`).join("")}</ul>`,
+            )
+            .join("")
+        : `<ul>${p.points.map((x) => `<li>${x}</li>`).join("")}</ul>`
     }
+    ${extLinks(p)
+      .map(
+        (l) =>
+          `<a class="btn btn-primary proto-btn" href="${l.href}" target="_blank" rel="noopener noreferrer">${l.btn} <span>${l.icon}</span></a>`,
+      )
+      .join(" ")}
     <div class="stack">${p.stack.map((s) => `<span>${s}</span>`).join("")}</div></div>`);
 }
 /* =========================================================

@@ -2119,3 +2119,26 @@ h1 em {
   width: 100%;
   justify-content: center;
 }
+
+/* ===== Project modal: titled sections (Business Overview / Outcome / Tools & Approach) ===== */
+.m-sec {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 24px 0 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.m-sec::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--yellow);
+}
+.m-body .proto-btn + .proto-btn {
+  margin-left: 10px;
+}
